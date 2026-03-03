@@ -89,7 +89,6 @@ function renderClubLeaderboard() {
             <tr>
                 <th>Rank</th>
                 <th>Club</th>
-                <th>Element</th>
                 <th>Sports Pts</th>
                 <th>Culture Pts</th>
                 <th>Total Pts</th>
@@ -103,7 +102,6 @@ function renderClubLeaderboard() {
             <tr style="cursor: pointer;" onclick="goToClubDetails(${club.id})">
                 <td class="rank">${index + 1}</td>
                 <td class="club-name-cell" style="border-left: 4px solid ${club.color}">${club.name}</td>
-                <td class="element-cell">${club.theme}</td>
                 <td class="points">${club.sportsPoints}</td>
                 <td class="points">${club.culturePoints}</td>
                 <td class="points" style="font-weight: bold; color: ${club.color};">${club.totalPoints}</td>

@@ -227,17 +227,41 @@ window.addEventListener('scroll', () => {
     if (prevBtn) prevBtn.addEventListener('click', goPrev);
     if (nextBtn) nextBtn.addEventListener('click', goNext);
 
-    // Auto-advance every 4 seconds
-    let autoPlay = setInterval(goNext, 4000);
+    // Auto-advance every 2.5 seconds
+    let autoPlay = setInterval(goNext, 2500);
 
     // Pause on hover
     const wrapper = document.querySelector('.gallery-carousel-wrapper');
     if (wrapper) {
         wrapper.addEventListener('mouseenter', () => clearInterval(autoPlay));
         wrapper.addEventListener('mouseleave', () => {
-            autoPlay = setInterval(goNext, 4000);
+            autoPlay = setInterval(goNext, 2500);
         });
     }
 
     updateCarousel();
+})();
+
+// ============================================
+// EVENTS STRIP INFINITE AUTO-SCROLL
+// ============================================
+(function () {
+    const strip = document.getElementById('eventsStrip');
+    if (!strip) return;
+
+    // Clone all event cards to create a seamless loop
+    const cards = Array.from(strip.children);
+    cards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        strip.appendChild(clone);
+    });
+
+    // Pause animation on hover
+    strip.addEventListener('mouseenter', () => {
+        strip.style.animationPlayState = 'paused';
+    });
+    strip.addEventListener('mouseleave', () => {
+        strip.style.animationPlayState = 'running';
+    });
 })();
