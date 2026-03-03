@@ -417,7 +417,8 @@ h6 {
         position: absolute;
         top: 100%;
         /* Position below navbar */
-        left: -100%;
+        left: -120%;
+        /* Changed to ensure it clears the left margin of the 95% width navbar */
         width: 100%;
         background-color: var(--dark-bg);
         /* Use pure dark bg for contrast */
@@ -425,15 +426,30 @@ h6 {
         transition: left 0.3s ease;
         padding: 2rem 0;
         gap: 2rem;
-        /* Increase gap slightly for touch targets */
+        /* Reverted vertical gap to larger spacing */
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
     }
 
     .nav-links a {
         font-size: 1.1rem;
-        /* Increase text size on mobile drop down */
-        color: #ffffff;
+        /* Reverted text size on mobile drop down */
+        color: #ffffff !important;
         /* Explicitly ensure it is white here */
+    }
+
+    .nav-links a:hover,
+    .navbar.scrolled .nav-links a.active,
+    .navbar.navbar-solid .nav-links a.active {
+        color: var(--primary-color) !important;
+    }
+
+    .navbar.scrolled .nav-links a.active::after,
+    .navbar.navbar-solid .nav-links a.active::after {
+        background: var(--primary-color);
+        bottom: -2px;
+        /* Pull it right up against the bottom curve of the letters */
+        height: 2px;
+        /* Make it nice and thin */
     }
 
     .nav-actions {
