@@ -13,10 +13,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log('MongoDB connection error:', err));
+// Global MongoDB Connection (Cached for Serverless)
+let cachedDb = null;
+
+async function connectToDatabase() {
+    if (cachedDb) {
+        return cachedDb;
+    }
+
+    try {
+        const db = await mongoose.connect(process.env.MONGODB_URI);
+        cachedDb = db;
+        console.log('MongoDB connected');
+        return db;
+    } catch (err) {
+        console.error('MongoDB connection error:', err);
+        throw err;
+    }
+}
+
+// Ensure database connection before handling any API routes
+app.use(async (req, res, next) => {
+    try {
+        await connectToDatabase();
+        next();
+    } catch (error) {
+        res.status(500).json({ message: 'Database connection failed' });
+    }
+});
 
 // ===================== AUTHENTICATION =====================
 
@@ -345,8 +369,13 @@ app.post('/api/init-clubs', async (req, res) => {
     }
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Start server if run directly (like 'node server.js')
+if (require.main === module) {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export the Express app as a Vercel serverless function
+module.exports = app;

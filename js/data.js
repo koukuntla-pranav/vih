@@ -1,8 +1,7 @@
 // Mock Data for Vihaang - Pancha Boothalu Clubs (5 Elements: Fire, Water, Earth, Air, Space)
 
 // Shared Configuration
-// For live: const API_BASE_URL = 'https://your-backend-url.onrender.com/api';
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = '/api';
 
 // Clubs data will be fetched from backend
 let clubs = [];

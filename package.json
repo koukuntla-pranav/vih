@@ -1,0 +1,31 @@
+{
+  "name": "vih",
+  "version": "1.0.0",
+  "description": "A modern, responsive website for managing and displaying club information, sports events, and cultural activities with a comprehensive scoring system.",
+  "main": "fix.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MISTERNEGATIVE21/vih.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MISTERNEGATIVE21/vih/issues"
+  },
+  "homepage": "https://github.com/MISTERNEGATIVE21/vih#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.2.3",
+    "pdf-parse": "^2.4.5",
+    "pdf2json": "^4.0.2"
+  }
+}
