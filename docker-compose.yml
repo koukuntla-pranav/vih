@@ -3,8 +3,8 @@ version: '3.8'
 services:
 
   backend:
-    image: ghcr.io/misternegative21/vihang:latest
-    container_name: vihang_app
+    image: ghcr.io/misternegative21/vihang:sha-6db3c69
+    container_name: vihang_backend
     ports:
       - "80:80"
       - "443:443"
