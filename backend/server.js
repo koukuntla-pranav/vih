@@ -9,9 +9,14 @@ const { Club, Sport, Culture, Organizer, ScoreLog } = require('./models');
 
 const app = express();
 
+const path = require('path');
+
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Serve static frontend files (root directory of project)
+app.use(express.static(path.join(__dirname, '../')));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
@@ -343,6 +348,11 @@ app.post('/api/init-clubs', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
+});
+
+// Fallback for frontend routing (if any)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
 });
 
 // Start server
