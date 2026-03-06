@@ -2974,6 +2974,13 @@ body {
     display: block;
 }
 
+/* Professors' photos are portrait-heavy; contain keeps full head visible. */
+.team-member-img-profs {
+    object-fit: contain;
+    object-position: center top;
+    background: #f3f3f3;
+}
+
 .team-member-details {
     padding: 0 0.25rem;
    
@@ -3033,7 +3040,11 @@ body {
     }
     .team-member-img-wrap {
         width: 130px;
-        height: 130px;
+        height: 165px;
+    }
+    .team-member-img {
+        object-fit: cover;
+        object-position: center 20%;
     }
     .team-member-featured .featured-img {
         width: 160px;
@@ -3049,7 +3060,7 @@ body {
 
 @media (max-width: 480px) {
     .team-page-section {
-        padding: 120px 0 40px;
+        padding: 0px 0 40px;
     }
     .team-row {
         gap: 1.2rem;
@@ -3059,8 +3070,11 @@ body {
     }
     .team-member-img-wrap {
         width: 110px;
-        height: 110px;
+        height: 140px;
         border-radius: 12px;
+    }
+    .team-member-img {
+        object-position: center 18%;
     }
     .team-member-featured {
         width: 170px;
