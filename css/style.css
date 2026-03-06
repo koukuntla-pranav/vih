@@ -53,6 +53,17 @@ body {
     opacity: 0.5;
     /* Semi-transparent */
     animation: floatOrb 20s infinite alternate ease-in-out;
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+@media (max-width: 900px) {
+    .element-orb {
+        animation: none;
+        filter: blur(60px);
+        opacity: 0.35;
+    }
 }
 
 /* Individual Element Colors and Sizes */
@@ -145,7 +156,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, border-radius 0.3s ease, padding 0.3s ease, width 0.3s ease, top 0.3s ease, box-shadow 0.3s ease;
 }
 
 
@@ -399,16 +410,14 @@ body {
     }
 
     .nav-links {
-        display: flex;
+        display: none;
         flex-direction: column;
         position: absolute;
         top: 100%;
-        /* Position below navbar */
-        left: -100%;
+        left: 0;
         width: 100%;
         background-color: rgba(26, 26, 26, 0.95);
         text-align: center;
-        transition: left 0.3s ease;
         padding: 2rem 0;
         gap: 0.5rem;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
@@ -431,7 +440,7 @@ body {
     }
 
     .nav-links.active {
-        left: 0;
+        display: flex;
     }
 
     /* Keep navbar glossy when menu is open — only dropdown gets dark bg */
