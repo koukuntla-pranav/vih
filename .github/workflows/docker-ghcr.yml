@@ -41,7 +41,9 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Verify Cloudflare Docker Compose Configuration
-        run: docker compose -f docker-compose.cloudflare.yml config
+        run: |
+          cp .env.default .env
+          docker compose -f docker-compose.cloudflare.yml config
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
