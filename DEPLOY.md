@@ -122,6 +122,51 @@ Visit `https://vihang.yourdomain.com` — your site is live with HTTPS!
 
 ---
 
+## Deployment with Cloudflare & External MongoDB
+
+Use this method if you have an external MongoDB (e.g., MongoDB Atlas) and want to point your Cloudflare **A record** directly to your server.
+
+### Step 1 — Prepare `.env`
+Ensure your `.env` has the external `MONGODB_URI`:
+```env
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/vihang
+PORT=80
+```
+
+### Step 2 — Start with new default Compose
+```bash
+docker compose up -d --build
+```
+> **Note:** The `latest` image is automatically built using `localbuild.dockerfile` and pushed to GHCR by GitHub Actions on every push to `main`.
+
+### Step 3 — Cloudflare Configuration
+1. In Cloudflare, point an **A record** (e.g., `vihang.com`) to your VPS IP.
+2. Go to **SSL/TLS** settings:
+    - Set to **Flexible** (Traffic flows as HTTPS to Cloudflare, and HTTP to your VPS on port 80).
+    - Or use **Full** if you set up a reverse proxy with a self-signed cert on the server.
+
+---
+
+## Cloudflare SSL Configuration & Troubleshooting
+
+If you are seeing errors (like **521**, **525**, or **ERR_TOO_MANY_REDIRECTS**), check your Cloudflare SSL/TLS settings:
+
+### Option 1 — Flexible SSL (Recommended for most)
+*   **How it works**: Browsers connect to Cloudflare via HTTPS, but Cloudflare connects to your VPS via HTTP (port 80).
+*   **Cloudflare Setting**: Set SSL/TLS to **Flexible**.
+*   **Common Error**: If you see `ERR_TOO_MANY_REDIRECTS`, it means your app is trying to force HTTPS. Since Cloudflare talks to your app via HTTP, the app sends a redirect, and Cloudflare sends it back to the app, creating a loop.
+*   **Fix**: Ensure your app **does not** have code like `next-sslify` or manual redirects to HTTPS when `req.protocol` is 'http'.
+
+### Option 2 — Full (Strict) SSL (Most Secure)
+*   **How it works**: End-to-end encryption. Cloudflare connects to your VPS via HTTPS (port 443).
+*   **Requirements**:
+    1.  You must have SSL certificates on your VPS (e.g. Cloudflare Origin CA).
+    2.  Open port **443** on your server.
+    3.  Configure a reverse proxy (like Nginx) to use your `.PEM` and `private.key` files.
+*   **Cloudflare Setting**: Set SSL/TLS to **Full (Strict)**.
+
+---
+
 ## GitHub Actions
 
 Both workflows include `workflow_dispatch` — trigger builds manually from the **Actions** tab → **Run workflow** button.
@@ -135,7 +180,8 @@ Both workflows include `workflow_dispatch` — trigger builds manually from the 
 | View running containers | `docker ps` |
 | View app logs | `docker logs -f vihang_backend` |
 | Restart app | `docker restart vihang_backend` |
-| Stop everything | `docker stop vihang_backend vihang_mongodb` |
-| Remove containers | `docker rm vihang_backend vihang_mongodb` |
+| Stop everything | `docker compose down` |
+| Remove containers | `docker rm -f vihang_backend` |
 | Renew SSL manually | `sudo certbot renew` |
 | Test Nginx config | `sudo nginx -t` |
+| Check config | `docker compose config` |
