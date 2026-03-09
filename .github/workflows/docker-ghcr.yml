@@ -42,7 +42,7 @@ jobs:
 
       - name: Verify Cloudflare Docker Compose Configuration
         run: |
-          cp .env.default .env
+          
           docker compose config
 
       - name: Build and push Docker image
