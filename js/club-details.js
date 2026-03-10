@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (clubId) {
         displayClubDetails(clubId); // Note: _id is a string from mongo now
     } else {
-        window.location.href = 'clubs.html';
+        window.location.href = '/clubs';
     }
 });
 
@@ -14,7 +14,7 @@ function displayClubDetails(clubId) {
     const club = clubs.find(c => c.id === clubId);
 
     if (!club) {
-        window.location.href = 'clubs.html';
+        window.location.href = '/clubs';
         return;
     }
 

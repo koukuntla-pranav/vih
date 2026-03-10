@@ -351,6 +351,35 @@ app.post('/api/init-clubs', async (req, res) => {
     }
 });
 
+// Clean frontend routes (extensionless URLs)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../index.html'));
+});
+
+app.get('/clubs', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/clubs.html'));
+});
+
+app.get('/club-details', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/club-details.html'));
+});
+
+app.get('/leadboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/leadboard.html'));
+});
+
+app.get('/team', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/team.html'));
+});
+
+app.get('/sponsors', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/sponsors.html'));
+});
+
+app.get('/organizer-dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, '../src/organizer-dashboard.html'));
+});
+
 // Fallback for frontend routing (if any)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));

@@ -90,7 +90,7 @@ function renderAboutSection() {
 
 function goToClubDetails(clubId) {
     sessionStorage.setItem('selectedClubId', clubId);
-    window.location.href = 'club-details.html';
+    window.location.href = '/club-details';
 }
 
 function renderHomeSponsors() {

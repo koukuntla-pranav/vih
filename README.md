@@ -95,6 +95,22 @@ npm start         # Production
 npm run dev       # Development (nodemon)
 ```
 
+### Clean URLs (Option A)
+
+If you serve the frontend through the Node/Express backend, clean URLs are available:
+
+| Clean URL | Serves | File |
+|-----------|--------|------|
+| `/` | Home | `index.html` |
+| `/clubs` | Clubs | `src/clubs.html` |
+| `/club-details` | Club Details | `src/club-details.html` |
+| `/leadboard` | Leaderboard | `src/leadboard.html` |
+| `/team` | Team | `src/team.html` |
+| `/sponsors` | Sponsors | `src/sponsors.html` |
+| `/organizer-dashboard` | Organizer Dashboard | `src/organizer-dashboard.html` |
+
+Note: If you deploy as a **static site**, you must configure host-level rewrites instead of relying on Express routes.
+
 ## API Endpoints
 
 | Method | Endpoint | Auth | Description |
