@@ -90,6 +90,39 @@
             text-decoration: underline;
         }
 
+        .login-type-group {
+            display: inline-flex;
+            border: 2px solid #e0e0e0;
+            border-radius: 999px;
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+            width: 100%;
+        }
+
+        .login-type-button {
+            flex: 1;
+            padding: 0.6rem 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            color: #333;
+            background: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .login-type-button.active {
+            background: #141414;
+            color: #fff;
+        }
+
+        .role-hint {
+            text-align: center;
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
         .dashboard-header {
             background: white;
             padding: 2rem;
@@ -234,6 +267,10 @@
             .log-table {
                 font-size: 0.9rem;
             }
+
+            .login-type-group {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -271,6 +308,18 @@
 
                 <!-- Login Form -->
                 <div id="loginForm">
+                    <div class="form-group">
+                        <label>Login Type</label>
+                        <div class="login-type-group" id="loginTypeGroup">
+                            <button type="button" class="login-type-button active" data-login-type="core" onclick="setLoginType('core')">
+                                Core Login
+                            </button>
+                            <button type="button" class="login-type-button" data-login-type="coordinator" onclick="setLoginType('coordinator')">
+                                Coordinator Login
+                            </button>
+                        </div>
+                    </div>
+                    <div class="role-hint" id="roleHint">Core login allows full access to scoring updates.</div>
                     <div class="form-group">
                         <label for="loginEmail">Email</label>
                         <input type="email" id="loginEmail" placeholder="Enter your email">
@@ -314,7 +363,7 @@
         <!-- Dashboard Section -->
         <div id="dashboardSection" class="dashboard-container" style="display: none;">
             <div class="dashboard-header">
-                <h1>🏆 Organizer Dashboard</h1>
+                <h1>🏆 Organizer Dashboard <span id="roleLabel" style="font-size: 0.9rem; color: #666;"></span></h1>
                 <button class="logout-btn" onclick="handleLogout()">Logout</button>
             </div>
 
@@ -480,6 +529,7 @@
         ];
 
         let authToken = localStorage.getItem('orgToken');
+        let loginType = localStorage.getItem('loginType') || 'core';
         let clubs = [];
 
         // Initialize
@@ -492,7 +542,45 @@
             } else {
                 showAuthForm();
             }
+            initLoginTypeSelector();
         });
+
+        function initLoginTypeSelector() {
+            const group = document.getElementById('loginTypeGroup');
+            if (!group) return;
+            const buttons = Array.from(group.querySelectorAll('.login-type-button'));
+
+            function setActive(type) {
+                buttons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.loginType === type);
+                });
+                loginType = type;
+                localStorage.setItem('loginType', loginType);
+                updateRoleLabel();
+                updateRoleHint();
+            }
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    setActive(button.dataset.loginType);
+                });
+            });
+
+            setActive(loginType || 'core');
+        }
+
+        function setLoginType(type) {
+            const group = document.getElementById('loginTypeGroup');
+            if (!group) return;
+            const buttons = Array.from(group.querySelectorAll('.login-type-button'));
+            buttons.forEach(button => {
+                button.classList.toggle('active', button.dataset.loginType === type);
+            });
+            loginType = type;
+            localStorage.setItem('loginType', loginType);
+            updateRoleLabel();
+            updateRoleHint();
+        }
 
         function toggleAuthForm() {
             const loginForm = document.getElementById('loginForm');
@@ -518,6 +606,22 @@
         function showDashboard() {
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('dashboardSection').style.display = 'block';
+            updateRoleLabel();
+        }
+
+        function updateRoleLabel() {
+            const label = document.getElementById('roleLabel');
+            if (!label) return;
+            const roleText = loginType === 'coordinator' ? 'Coordinator' : 'Core';
+            label.textContent = `(${roleText})`;
+        }
+
+        function updateRoleHint() {
+            const hint = document.getElementById('roleHint');
+            if (!hint) return;
+            hint.textContent = loginType === 'coordinator'
+                ? 'Coordinator login is limited to assigned event updates.'
+                : 'Core login allows full access to scoring updates.';
         }
 
         function updateEventDropdown() {
@@ -574,6 +678,9 @@
         async function handleLogin() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
+            const selectedButton = document.querySelector('.login-type-button.active');
+            loginType = selectedButton ? selectedButton.dataset.loginType : 'core';
+            localStorage.setItem('loginType', loginType);
 
             if (!email || !password) {
                 showMessage('Please fill all fields', 'error');
@@ -584,7 +691,7 @@
                 const response = await fetch(`${API_BASE_URL}/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
+                    body: JSON.stringify({ email, password, loginType })
                 });
 
                 const data = await response.json();
@@ -650,6 +757,7 @@
             showAuthForm();
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
+            updateRoleLabel();
         }
 
         async function loadClubs() {
