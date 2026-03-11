@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard - Vihaang</title>
+    <link rel="icon" type="image/svg+xml" href="../V logo.svg">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body { background: #f5f6fa; }
+        .coordinator-dashboard {
+            min-height: 100vh;
+            padding: 120px 20px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .dashboard-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashboard-header h1 { color: #333; }
+        .logout-btn {
+            padding: 0.5rem 1.5rem;
+            background: #000000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .welcome-box {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="coordinator-dashboard">
+        <div class="dashboard-header">
+            <h1>👋 Coordinator Dashboard</h1>
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </div>
+        <div class="welcome-box">
+            <h2>Welcome, Coordinator!</h2>
+            <p>This is your dedicated dashboard. Here you can update event scores assigned to you and view your club's progress.</p>
+            <p><strong>Note:</strong> You have limited access compared to core/admin users.</p>
+        </div>
+    </div>
+    <script>
+        // Simple logout logic (shared with organizer dashboard)
+        function handleLogout() {
+            localStorage.removeItem('orgToken');
+            localStorage.removeItem('loginType');
+            // Only try to hide mainNavbar if it exists (for code reuse safety)
+            var navbar = document.getElementById('mainNavbar');
+            if (navbar) navbar.style.display = '';
+            window.location.href = '/organizer-dashboard';
+        }
+    </script>
+</body>
+</html>
+            localStorage.removeItem('loginType');
+            window.location.href = '/organizer-dashboard';
+        }
+    </script>
+</body>
+</html>

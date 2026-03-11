@@ -277,7 +277,7 @@
 
 <body>
     <div class="organizer-dashboard">
-        <nav class="navbar navbar-solid">
+        <nav class="navbar navbar-solid" id="mainNavbar">
             <div class="nav-container">
                 <a href="/" class="logo" style="text-decoration: none; color: inherit;"><img
                         src="../images/Vihang logo.png"></a>
@@ -286,7 +286,6 @@
                     <span class="bar"></span>
                     <span class="bar"></span>
                 </div>
-
 
                 <ul class="nav-links">
                     <li><a href="/">Home</a></li>
@@ -321,8 +320,8 @@
                     </div>
                     <div class="role-hint" id="roleHint">Core login allows full access to scoring updates.</div>
                     <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" placeholder="Enter your email">
+                        <label for="loginUsername">Username</label>
+                        <input type="text" id="loginUsername" placeholder="Enter your username">
                     </div>
                     <div class="form-group">
                         <label for="loginPassword">Password</label>
@@ -344,8 +343,8 @@
                         <input type="text" id="regName" placeholder="Enter your name">
                     </div>
                     <div class="form-group">
-                        <label for="regEmail">Email</label>
-                        <input type="email" id="regEmail" placeholder="Enter your email">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" placeholder="Enter your username">
                     </div>
                     <div class="form-group">
                         <label for="regPassword">Password</label>
@@ -367,6 +366,107 @@
                 <button class="logout-btn" onclick="handleLogout()">Logout</button>
             </div>
 
+            <!-- Register Coordinator Section (visible to core/admin only) -->
+            <div class="update-section" id="registerCoordinatorSection" style="display: none;">
+                <h3>Register New Coordinator</h3>
+                <form id="registerCoordinatorForm" class="update-form" onsubmit="registerCoordinator(event)">
+                    <div class="form-group">
+                        <label for="coordName">Name</label>
+                        <input type="text" id="coordName" placeholder="Enter coordinator name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="coordUsername">Username</label>
+                        <input type="text" id="coordUsername" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="coordEmail">Email</label>
+                        <input type="email" id="coordEmail" placeholder="Enter email (optional)">
+                    </div>
+                    <div class="form-group">
+                        <label for="coordPassword">Password</label>
+                        <input type="password" id="coordPassword" placeholder="Create a password" required>
+                    </div>
+                    <button class="submit-btn" type="submit">Register Coordinator</button>
+                </form>
+            </div>
+
+            <!-- Club Naming Section -->
+             <script>
+                    // Show Register Coordinator section only for core/admin
+                    function showRegisterCoordinatorSection() {
+                        // Only show if logged in as core/admin (not coordinator)
+                        if (loginType === 'core') {
+                            document.getElementById('registerCoordinatorSection').style.display = 'block';
+                        } else {
+                            document.getElementById('registerCoordinatorSection').style.display = 'none';
+                        }
+                    }
+
+                    // Call on dashboard load
+                    document.addEventListener('DOMContentLoaded', function () {
+                        if (authToken) {
+                            showRegisterCoordinatorSection();
+                        }
+                    });
+
+                    // Register Coordinator logic
+                    async function registerCoordinator(event) {
+                        event.preventDefault();
+                        const name = document.getElementById('coordName').value.trim();
+                        const username = document.getElementById('coordUsername').value.trim();
+                        const email = document.getElementById('coordEmail').value.trim();
+                        const password = document.getElementById('coordPassword').value;
+                        if (!name || !username || !password) {
+                            showMessage('Please fill all required fields', 'error');
+                            return;
+                        }
+                        try {
+                            const response = await fetch(`${API_BASE_URL}/coordinators/register`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${authToken}`
+                                },
+                                body: JSON.stringify({ name, username, email, password })
+                            });
+                            const data = await response.json();
+                            if (response.ok) {
+                                showMessage('Coordinator registered successfully!', 'success');
+                                document.getElementById('registerCoordinatorForm').reset();
+                            } else {
+                                showMessage(data.message || 'Registration failed', 'error');
+                            }
+                        } catch (error) {
+                            showMessage('Error: ' + error.message, 'error');
+                        }
+                    }
+                    </script>
+            <div class="update-section">
+                <h3>Name the 5 Clubs</h3>
+                <form id="clubNamesForm" class="update-form" onsubmit="saveClubNames(event)">
+                    <div class="form-group">
+                        <label for="clubName1">Club 1</label>
+                        <input type="text" id="clubName1" placeholder="Enter club name 1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubName2">Club 2</label>
+                        <input type="text" id="clubName2" placeholder="Enter club name 2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubName3">Club 3</label>
+                        <input type="text" id="clubName3" placeholder="Enter club name 3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubName4">Club 4</label>
+                        <input type="text" id="clubName4" placeholder="Enter club name 4" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clubName5">Club 5</label>
+                        <input type="text" id="clubName5" placeholder="Enter club name 5" required>
+                    </div>
+                    <button class="submit-btn" type="submit">Save Club Names</button>
+                </form>
+            </div>
             <div id="message" class="message"></div>
 
             <!-- Update Club Scores -->
@@ -477,9 +577,8 @@
 
     <script>
         // Configuration
-       
-        // For development:
-        const API_BASE_URL = 'https://vihang-woya.onrender.com/api';
+        // Use environment variable if available, otherwise default to localhost for development
+        const API_BASE_URL = window.API_BASE_URL || 'http://localhost:5000/api';
 
         const SPORTS_DATA = [
             // Outdoor
@@ -601,12 +700,18 @@
         function showAuthForm() {
             document.getElementById('authSection').style.display = 'block';
             document.getElementById('dashboardSection').style.display = 'none';
+            // Show navbar on login page
+            const navbar = document.getElementById('mainNavbar');
+            if (navbar) navbar.style.display = '';
         }
 
         function showDashboard() {
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('dashboardSection').style.display = 'block';
             updateRoleLabel();
+            // Hide navbar on dashboard
+            const navbar = document.getElementById('mainNavbar');
+            if (navbar) navbar.style.display = 'none';
         }
 
         function updateRoleLabel() {
@@ -676,35 +781,46 @@
         }
 
         async function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
+            const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
             const selectedButton = document.querySelector('.login-type-button.active');
             loginType = selectedButton ? selectedButton.dataset.loginType : 'core';
             localStorage.setItem('loginType', loginType);
 
-            if (!email || !password) {
+            if (!username || !password) {
                 showMessage('Please fill all fields', 'error');
                 return;
             }
 
             try {
-                const response = await fetch(`${API_BASE_URL}/auth/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password, loginType })
-                });
-
-                const data = await response.json();
+                let response, data;
+                if (loginType === 'coordinator') {
+                    // Coordinator login: send to /coordinators/login with username, password
+                    response = await fetch(`${API_BASE_URL}/coordinators/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                } else {
+                    // Core/admin login: send to /auth/login with username, password only
+                    response = await fetch(`${API_BASE_URL}/auth/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+                }
+                data = await response.json();
 
                 if (response.ok) {
                     authToken = data.token;
                     localStorage.setItem('orgToken', authToken);
                     showMessage('Login successful!', 'success');
                     setTimeout(() => {
-                        showDashboard();
-                        loadClubs();
-                        loadScoreLogs();
-                        updateEventDropdown();
+                        if (loginType === 'coordinator') {
+                            window.location.href = '/coordinator-dashboard';
+                        } else {
+                            window.location.href = '/organizer-dashboard';
+                        }
                     }, 500);
                 } else {
                     showMessage(data.message || 'Login failed', 'error');
@@ -716,10 +832,10 @@
 
         async function handleRegister() {
             const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
+            const username = document.getElementById('regUsername').value;
             const password = document.getElementById('regPassword').value;
 
-            if (!name || !email || !password) {
+            if (!name || !username || !password) {
                 showMessage('Please fill all fields', 'error');
                 return;
             }
@@ -728,7 +844,7 @@
                 const response = await fetch(`${API_BASE_URL}/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, email, password })
+                    body: JSON.stringify({ name, username, password })
                 });
 
                 const data = await response.json();
@@ -882,6 +998,31 @@
                 loadScoreLogs();
             }
         }, 10000);
+
+        // Club Naming Logic
+        function saveClubNames(event) {
+            event.preventDefault();
+            const names = [];
+            for (let i = 1; i <= 5; i++) {
+                const val = document.getElementById('clubName' + i).value.trim();
+                names.push(val);
+            }
+            localStorage.setItem('vihangClubNames', JSON.stringify(names));
+            showMessage('Club names saved!', 'success');
+        }
+
+        // Load club names on dashboard load
+        document.addEventListener('DOMContentLoaded', function () {
+            const saved = localStorage.getItem('vihangClubNames');
+            if (saved) {
+                const names = JSON.parse(saved);
+                for (let i = 1; i <= 5; i++) {
+                    if (names[i-1]) {
+                        document.getElementById('clubName' + i).value = names[i-1];
+                    }
+                }
+            }
+        });
     </script>
 </body>
 

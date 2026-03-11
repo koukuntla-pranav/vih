@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Club Schema
 const clubSchema = new mongoose.Schema({
+    clubNumber: { type: Number, required: true, unique: true },
     name: { type: String, required: true },
     theme: { type: String, required: true },
     color: { type: String, required: true },
@@ -52,12 +53,28 @@ const cultureSchema = new mongoose.Schema({
 // Organizer Schema
 const organizerSchema = new mongoose.Schema({
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    username: { type: String, required: true, unique: true }, // Usernames must be unique
+    email: { type: String },
     password: { type: String, required: true },
     role: { type: String, default: 'organizer' },
+    accessLevel: { type: String, enum: ['superadmin', 'admin'], default: 'admin' }, // superadmin or admin
     canUpdateScores: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now }
 });
+
+
+// User (Coordinator) Schema - separate collection
+const userSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    email: { type: String, unique: true, sparse: true },
+    clubNumber: { type: Number, required: true }, // references Club.clubNumber
+    year: { type: Number, enum: [1, 2], required: true },
+    createdAt: { type: Date, default: Date.now }
+});
+
+const User = mongoose.model('User', userSchema);
 
 // Score Update Log Schema
 const scoreLogSchema = new mongoose.Schema({
@@ -75,5 +92,6 @@ module.exports = {
     Sport: mongoose.model('Sport', sportSchema),
     Culture: mongoose.model('Culture', cultureSchema),
     Organizer: mongoose.model('Organizer', organizerSchema),
+    User,
     ScoreLog: mongoose.model('ScoreLog', scoreLogSchema)
 };

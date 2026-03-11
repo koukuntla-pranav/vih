@@ -5,7 +5,24 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const { Club, Sport, Culture, Organizer, ScoreLog } = require('./models');
+const { Club, Sport, Culture, Organizer, User, ScoreLog } = require('./models');
+
+
+
+// Middleware to verify admin/superadmin JWT for protected routes
+// function verifyAdminToken(req, res, next) {
+//     const authHeader = req.headers['authorization'];
+//     if (!authHeader) return res.status(401).json({ message: 'No token provided' });
+//     const token = authHeader.split(' ')[1];
+//     if (!token) return res.status(401).json({ message: 'No token provided' });
+//     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+//         if (err) return res.status(403).json({ message: 'Invalid token' });
+//         req.userId = decoded.id;
+//         next();
+//     });
+// }
+
+
 
 const app = express();
 
@@ -26,82 +43,12 @@ mongoose.connect(process.env.MONGODB_URI)
 
 // ===================== AUTHENTICATION =====================
 
-// Register Organizer
-app.post('/api/auth/register', async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
 
-        // Check if organizer exists
-        let organizer = await Organizer.findOne({ email });
-        if (organizer) {
-            return res.status(400).json({ message: 'Organizer already exists' });
-        }
-
-        // Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Create organizer
-        organizer = new Organizer({
-            name,
-            email,
-            password: hashedPassword
-        });
-
-        await organizer.save();
-
-        // Create JWT token
-        const token = jwt.sign({ id: organizer._id }, process.env.JWT_SECRET, {
-            expiresIn: '30d'
-        });
-
-        res.json({
-            token,
-            organizer: {
-                id: organizer._id,
-                name: organizer.name,
-                email: organizer.email
-            }
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-});
-
-// Login Organizer
-app.post('/api/auth/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Check if organizer exists
-        const organizer = await Organizer.findOne({ email });
-        if (!organizer) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-
-        // Check password
-        const isMatch = await bcrypt.compare(password, organizer.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
-        }
-
-        // Create JWT token
-        const token = jwt.sign({ id: organizer._id }, process.env.JWT_SECRET, {
-            expiresIn: '30d'
-        });
-
-        res.json({
-            token,
-            organizer: {
-                id: organizer._id,
-                name: organizer.name,
-                email: organizer.email
-            }
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error', error: error.message });
-    }
-});
+// Use routers for authentication and coordinator registration
+const organizerRouter = require('./routes/organizer');
+const coordinatorRouter = require('./routes/coordinator');
+app.use('/api', organizerRouter);
+app.use('/api', coordinatorRouter);
 
 // Middleware to verify token
 const verifyToken = (req, res, next) => {
@@ -351,42 +298,14 @@ app.post('/api/init-clubs', async (req, res) => {
     }
 });
 
-// Clean frontend routes (extensionless URLs)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
 
-app.get('/clubs', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/clubs.html'));
-});
-
-app.get('/club-details', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/club-details.html'));
-});
-
-app.get('/leadboard', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/leadboard.html'));
-});
-
-app.get('/team', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/team.html'));
-});
-
-app.get('/sponsors', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/sponsors.html'));
-});
-
-app.get('/organizer-dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, '../src/organizer-dashboard.html'));
-});
-
-// Fallback for frontend routing (if any)
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-});
+// Use frontend router for static/html routes
+const frontendRouter = require('./routes/frontend');
+app.use('/', frontendRouter);
 
 // Start server
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+

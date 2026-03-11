@@ -50,9 +50,14 @@ vihaang-website/
 │   └── organizer-dashboard.html    # Admin dashboard
 ├── images/                         # Logos, photos, sponsor images
 └── backend/
-    ├── server.js                   # Express API server
-    ├── models.js                   # Mongoose models
-    ├── seed.js                     # Database seed script
+    ├── server.js                   # Express API server (uses modular routers)
+    ├── models.js                   # Mongoose models (Club, Organizer, User, etc.)
+    ├── routes/
+    │   ├── organizer.js            # Organizer/core/admin auth routes
+    │   ├── coordinator.js          # Coordinator registration routes
+    │   └── frontend.js             # Frontend/static HTML routes
+    ├── seed.js                     # Database seed script (admin/superadmin)
+    ├── cord-seed.js                # Coordinator seeding script (user1)
     └── package.json                # Backend dependencies
 ```
 
@@ -111,12 +116,14 @@ If you serve the frontend through the Node/Express backend, clean URLs are avail
 
 Note: If you deploy as a **static site**, you must configure host-level rewrites instead of relying on Express routes.
 
-## API Endpoints
+
+## API Endpoints (Backend Modularization)
 
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
-| POST | `/api/auth/register` | — | Register an organizer |
-| POST | `/api/auth/login` | — | Login and receive JWT |
+| POST | `/api/auth/register` | — | Register an organizer (core/admin/superadmin) |
+| POST | `/api/auth/login` | — | Login and receive JWT (organizer) |
+| POST | `/api/coordinators/register` | JWT (admin/core) | Register a coordinator (see rules below) |
 | GET | `/api/clubs` | — | All clubs sorted by points |
 | GET | `/api/clubs/:id/breakdown` | — | Detailed score breakdown for a club |
 | POST | `/api/clubs/:id/add-sport-points` | JWT | Add sport points (sport name + gender) |
@@ -127,6 +134,32 @@ Note: If you deploy as a **static site**, you must configure host-level rewrites
 | POST | `/api/culture/:id/update-standings` | JWT | Update culture standings |
 | GET | `/api/score-logs` | JWT | Last 50 score update logs |
 | POST | `/api/init-clubs` | — | Seed initial club data |
+
+### Coordinator Registration Rules
+
+- Coordinators are stored in a separate `users` collection (not organizers)
+- Each coordinator must have:
+    - `clubNumber` (primary key for club assignment)
+    - `year` (1 or 2)
+- Each club can have **max 4 coordinators**
+- Each club can have **max 2 coordinators from the same year**
+
+### Seeding Scripts
+
+- `seed.js`: Seeds admin/superadmin users (organizers)
+- `cord-seed.js`: Seeds a coordinator user (`user1`/`user1`, club 1, year 1)
+
+### Backend Modularization
+
+- All authentication and registration routes are now modularized:
+    - `routes/organizer.js`: Organizer/core/admin auth
+    - `routes/coordinator.js`: Coordinator registration
+    - `routes/frontend.js`: Frontend/static HTML routes
+
+### Data Model Changes
+
+- Added `User` (coordinator) schema with fields: `name`, `username`, `password`, `email`, `clubNumber`, `year`, `createdAt`
+- Enforced registration rules for coordinators (see above)
 
 ## Features
 
