@@ -1079,9 +1079,8 @@ body {
 .club-card {
     background: white;
     border-radius: 12px;
-    padding: 2rem;
+    padding: 0rem;
     box-shadow: var(--shadow);
-    border-left: 5px solid #f0bebe;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
@@ -1839,9 +1838,8 @@ body {
 .club-card.club-card {
     background: white;
     border-radius: 12px;
-    padding: 2rem;
+    padding: 0rem;
     box-shadow: var(--shadow);
-    border-left: 5px solid #FF6B6B;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: center;
