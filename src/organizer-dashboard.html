@@ -7,272 +7,8 @@
     <title>Organizer Dashboard - Vihaang</title>
     <link rel="icon" type="image/svg+xml" href="../V logo.svg">
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .organizer-dashboard {
-            min-height: 100vh;
-            padding: 120px 20px 20px;
-            background-color: rgb(238, 238, 238);
-        }
-
-        .auth-container,
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .auth-section {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            margin: 3rem auto;
-        }
-
-        .auth-section h2 {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #333;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #141414;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            background-color: #cac8c8;
-            color: rgb(14, 13, 13);
-        }
-
-        .toggle-auth {
-            text-align: center;
-            margin-top: 1rem;
-            color: #666;
-        }
-
-        .toggle-auth a {
-            color: #667eea;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        .login-type-group {
-            display: inline-flex;
-            border: 2px solid #e0e0e0;
-            border-radius: 999px;
-            overflow: hidden;
-            margin-bottom: 1.25rem;
-            width: 100%;
-        }
-
-        .login-type-button {
-            flex: 1;
-            padding: 0.6rem 0.75rem;
-            text-align: center;
-            font-weight: 700;
-            color: #333;
-            background: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-
-        .login-type-button.active {
-            background: #141414;
-            color: #fff;
-        }
-
-        .role-hint {
-            text-align: center;
-            margin-bottom: 1.25rem;
-            font-size: 0.95rem;
-            color: #555;
-        }
-
-        .dashboard-header {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .dashboard-header h1 {
-            color: #333;
-        }
-
-        .logout-btn {
-            padding: 0.5rem 1.5rem;
-            background: #000000;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .update-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .update-section h3 {
-            color: #333;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 0.5rem;
-        }
-
-        .update-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-        }
-
-        .form-group select:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-
-        .submit-btn {
-            grid-column: 1 / -1;
-            padding: 0.75rem;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-
-        .submit-btn:hover {
-            background: #45a049;
-        }
-
-        .score-logs {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .score-logs h3 {
-            color: #333;
-            margin-bottom: 1.5rem;
-        }
-
-        .log-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .log-table th {
-            background: #667eea;
-            color: white;
-            padding: 0.75rem;
-            text-align: left;
-        }
-
-        .log-table td {
-            border-bottom: 1px solid #e0e0e0;
-            padding: 0.75rem;
-        }
-
-        .log-table tr:hover {
-            background: #f5f5f5;
-        }
-
-        .message {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-header {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-
-            .update-form {
-                grid-template-columns: 1fr;
-            }
-
-            .log-table {
-                font-size: 0.9rem;
-            }
-
-            .login-type-group {
-                width: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/organizer-dashboard.css">
+    <script src="../js/organizer-dashboard.js" defer></script>
 </head>
 
 <body>
@@ -366,154 +102,132 @@
                 <button class="logout-btn" onclick="handleLogout()">Logout</button>
             </div>
 
-            <!-- Register Coordinator Section (visible to core/admin only) -->
-            <div class="update-section" id="registerCoordinatorSection" style="display: none;">
-                <h3>Register New Coordinator</h3>
-                <form id="registerCoordinatorForm" class="update-form" onsubmit="registerCoordinator(event)">
-                    <div class="form-group">
-                        <label for="coordName">Name</label>
-                        <input type="text" id="coordName" placeholder="Enter coordinator name" required>
+            <!-- Two Column Layout -->
+            <div class="dashboard-main-content">
+                <!-- Left Column: Registration & Club Management -->
+                <div class="dashboard-left-column">
+                    <!-- Register Coordinator Section (visible to core/admin only) -->
+                    <div class="update-section" id="registerCoordinatorSection" style="display: none;">
+                        <h3>Register New Coordinator</h3>
+                        <form id="registerCoordinatorForm" class="update-form" onsubmit="registerCoordinator(event)">
+                            <div class="form-group">
+                                <label for="coordName">Name</label>
+                                <input type="text" id="coordName" placeholder="Enter coordinator name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="coordUsername">Username</label>
+                                <input type="text" id="coordUsername" placeholder="Enter username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="coordEmail">Email</label>
+                                <input type="email" id="coordEmail" placeholder="Enter email (optional)">
+                            </div>
+                            <div class="form-group">
+                                <label for="coordPassword">Password</label>
+                                <input type="password" id="coordPassword" placeholder="Create a password" required>
+                            </div>
+                            <button class="submit-btn" type="submit">Register Coordinator</button>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="coordUsername">Username</label>
-                        <input type="text" id="coordUsername" placeholder="Enter username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="coordEmail">Email</label>
-                        <input type="email" id="coordEmail" placeholder="Enter email (optional)">
-                    </div>
-                    <div class="form-group">
-                        <label for="coordPassword">Password</label>
-                        <input type="password" id="coordPassword" placeholder="Create a password" required>
-                    </div>
-                    <button class="submit-btn" type="submit">Register Coordinator</button>
-                </form>
-            </div>
 
-            <!-- Club Naming Section -->
-             <script>
-                    // Show Register Coordinator section only for core/admin
-                    function showRegisterCoordinatorSection() {
-                        // Only show if logged in as core/admin (not coordinator)
-                        if (loginType === 'core') {
-                            document.getElementById('registerCoordinatorSection').style.display = 'block';
-                        } else {
-                            document.getElementById('registerCoordinatorSection').style.display = 'none';
-                        }
-                    }
+                    <!-- Update Club Scores -->
+                    <div class="update-section">
+                        <h3>Update Club Scores (Individual Events)</h3>
+                        <div class="update-form">
+                            <div class="form-group">
+                                <label for="clubSelect">Select Club</label>
+                                <select id="clubSelect">
+                                    <option value="">-- Choose a club --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="scoreType">Score Type</label>
+                                <select id="scoreType" onchange="updateEventDropdown()">
+                                    <option value="sports">Sports Points</option>
+                                    <option value="culture">Culture Points</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="eventSelect">Select Event/Sport</label>
+                                <select id="eventSelect">
+                                    <option value="">-- Choose an event --</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="genderGroup">
+                                <label for="genderSelect">Select Gender</label>
+                                <select id="genderSelect">
+                                    <option value="">-- Choose Gender --</option>
+                                    <option value="male">Boys</option>
+                                    <option value="female">Girls</option>
+                                    <option value="mixed">Mixed</option>
+                                    <option value="neutral">Neutral/N/A</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pointsInput">Points to Add/Subtract</label>
+                                <input type="number" id="pointsInput" placeholder="Enter points (use '-' to subtract)">
+                            </div>
+                            <button class="submit-btn" onclick="handleScoreUpdate()">Update Score</button>
+                        </div>
+                    </div>
 
-                    // Call on dashboard load
-                    document.addEventListener('DOMContentLoaded', function () {
-                        if (authToken) {
-                            showRegisterCoordinatorSection();
-                        }
-                    });
+                    <!-- Penalty Points Section -->
+                    <div class="update-section">
+                        <h3>⚠️ Penalty Points</h3>
+                        <div class="update-form">
+                            <div class="form-group">
+                                <label for="penaltyClubSelect">Select Club</label>
+                                <select id="penaltyClubSelect">
+                                    <option value="">-- Choose a club --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="penaltyReason">Reason for Penalty</label>
+                                <input type="text" id="penaltyReason" placeholder="Enter reason (e.g., Late submission, Misconduct)">
+                            </div>
+                            <div class="form-group">
+                                <label for="penaltyPoints">Penalty Points</label>
+                                <input type="number" id="penaltyPoints" placeholder="Enter penalty points (positive number)">
+                            </div>
+                            <button class="submit-btn" onclick="handlePenaltyUpdate()" style="background: #ff4444;">Add Penalty</button>
+                        </div>
+                    </div>
+                </div>
 
-                    // Register Coordinator logic
-                    async function registerCoordinator(event) {
-                        event.preventDefault();
-                        const name = document.getElementById('coordName').value.trim();
-                        const username = document.getElementById('coordUsername').value.trim();
-                        const email = document.getElementById('coordEmail').value.trim();
-                        const password = document.getElementById('coordPassword').value;
-                        if (!name || !username || !password) {
-                            showMessage('Please fill all required fields', 'error');
-                            return;
-                        }
-                        try {
-                            const response = await fetch(`${API_BASE_URL}/coordinators/register`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': `Bearer ${authToken}`
-                                },
-                                body: JSON.stringify({ name, username, email, password })
-                            });
-                            const data = await response.json();
-                            if (response.ok) {
-                                showMessage('Coordinator registered successfully!', 'success');
-                                document.getElementById('registerCoordinatorForm').reset();
-                            } else {
-                                showMessage(data.message || 'Registration failed', 'error');
-                            }
-                        } catch (error) {
-                            showMessage('Error: ' + error.message, 'error');
-                        }
-                    }
-                    </script>
-            <div class="update-section">
-                <h3>Name the 5 Clubs</h3>
-                <form id="clubNamesForm" class="update-form" onsubmit="saveClubNames(event)">
-                    <div class="form-group">
-                        <label for="clubName1">Club 1</label>
-                        <input type="text" id="clubName1" placeholder="Enter club name 1" required>
+                <!-- Right Column: Club Mapping & Info -->
+                <div class="dashboard-right-column">
+                    <!-- Club Names & Themes Mapping (Editable, Bulk) -->
+                    <div class="update-section">
+                        <h3>📋 Club Names & Themes</h3>
+                        <form id="clubMappingForm" class="club-mapping" autocomplete="off" onsubmit="saveClubMapping(event)">
+                            <!-- Mapping items will be rendered by JS -->
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="clubName2">Club 2</label>
-                        <input type="text" id="clubName2" placeholder="Enter club name 2" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clubName3">Club 3</label>
-                        <input type="text" id="clubName3" placeholder="Enter club name 3" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clubName4">Club 4</label>
-                        <input type="text" id="clubName4" placeholder="Enter club name 4" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="clubName5">Club 5</label>
-                        <input type="text" id="clubName5" placeholder="Enter club name 5" required>
-                    </div>
-                    <button class="submit-btn" type="submit">Save Club Names</button>
-                </form>
-            </div>
-            <div id="message" class="message"></div>
 
-            <!-- Update Club Scores -->
-            <div class="update-section">
-                <h3>Update Club Scores (Individual Events)</h3>
-                <div class="update-form">
-                    <div class="form-group">
-                        <label for="clubSelect">Select Club</label>
-                        <select id="clubSelect">
-                            <option value="">-- Choose a club --</option>
-                        </select>
+                    <!-- Quick Stats -->
+                    <div class="update-section">
+                        <h3>📊 Quick Stats</h3>
+                        <div class="stats-grid" id="quickStats">
+                            <div class="stat-item">
+                                <div class="stat-label">Total Clubs</div>
+                                <div class="stat-value" id="totalClubs">5</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Active Events</div>
+                                <div class="stat-value" id="activeEvents">-</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Last Update</div>
+                                <div class="stat-value" id="lastUpdate">-</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="scoreType">Score Type</label>
-                        <select id="scoreType" onchange="updateEventDropdown()">
-                            <option value="sports">Sports Points</option>
-                            <option value="culture">Culture Points</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="eventSelect">Select Event/Sport</label>
-                        <select id="eventSelect">
-                            <option value="">-- Choose an event --</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="genderGroup">
-                        <label for="genderSelect">Select Gender</label>
-                        <select id="genderSelect">
-                            <option value="">-- Choose Gender --</option>
-                            <option value="male">Boys</option>
-                            <option value="female">Girls</option>
-                            <option value="mixed">Mixed</option>
-                            <option value="neutral">Neutral/N/A</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="pointsInput">Points to Add/Subtract</label>
-                        <input type="number" id="pointsInput" placeholder="Enter points (use '-' to subtract)">
-                    </div>
-                    <button class="submit-btn" onclick="handleScoreUpdate()">Update Score</button>
                 </div>
             </div>
 
             <!-- Recent Score Updates -->
             <div class="score-logs">
                 <h3>Recent Score Updates</h3>
-
                 <table class="log-table">
                     <thead>
                         <tr>
@@ -574,456 +288,9 @@
             </div>
         </div>
     </footer>
+    <script src="../js/organizer-dashboard.js"></script>
 
-    <script>
-        // Configuration
-        // Use environment variable if available, otherwise default to localhost for development
-        const API_BASE_URL = window.API_BASE_URL || 'http://localhost:5000/api';
-
-        const SPORTS_DATA = [
-            // Outdoor
-            { name: 'Cricket', type: 'Outdoor', genders: ['male', 'female'] },
-            { name: 'Football', type: 'Outdoor', genders: ['male'] },
-            { name: 'Kho-Kho', type: 'Outdoor', genders: ['male', 'female'] },
-            { name: 'Throw Ball', type: 'Outdoor', genders: ['female'] },
-            { name: 'Basketball', type: 'Outdoor', genders: ['male', 'female'] },
-            { name: 'Volleyball', type: 'Outdoor', genders: ['male', 'female'] },
-            { name: 'Handball', type: 'Outdoor', genders: ['male'] },
-            { name: 'Box Cricket', type: 'Outdoor', genders: ['neutral'] },
-            { name: 'Tug of War', type: 'Outdoor', genders: ['neutral'] },
-            { name: 'Swimming', type: 'Outdoor', genders: ['male', 'female'] },
-            { name: 'Vihang Letters', type: 'Outdoor', genders: ['neutral'] },
-            { name: 'Inaugural March Past', type: 'Outdoor', genders: ['neutral'] },
-            // Indoor
-            { name: 'Badminton', type: 'Indoor', genders: ['male', 'female', 'mixed'] },
-            { name: 'Table Tennis', type: 'Indoor', genders: ['male', 'female'] },
-            { name: 'Carrom', type: 'Indoor', genders: ['male', 'female'] },
-            { name: 'Chess', type: 'Indoor', genders: ['male', 'female'] },
-            { name: 'Powerlifting', type: 'Indoor', genders: ['male'] },
-            { name: 'Yoga', type: 'Indoor', genders: ['neutral'] },
-            // E-Sports
-            { name: 'BGMI', type: 'E-Sports', genders: ['neutral'] },
-            { name: 'Valorant', type: 'E-Sports', genders: ['neutral'] },
-            // Athletics
-            { name: 'Discus Throw', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Javelin Throw', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Marathon', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Relay 4x100m', type: 'Athletics', genders: ['male'] },
-            { name: 'Shot Put', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Slow Cycling', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Sprint 100m', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Sprint 200m', type: 'Athletics', genders: ['male', 'female'] },
-            { name: 'Triathlon Relay', type: 'Athletics', genders: ['neutral'] },
-            { name: 'Long Jump', type: 'Athletics', genders: ['male'] },
-            { name: 'Swimming 100m', type: 'Athletics', genders: ['male'] }
-        ];
-        const SPORTS = SPORTS_DATA.map(s => s.name);
-        const CULTURE_EVENTS = [
-            'Debate (English)', 'Debate (Hindi)', 'Poetry (English)', 'Poetry (Hindi)',
-            'Quiz', 'Pic of the Day', 'Reel of the Day', 'Meme of the Day',
-            'Pic of Vihang', 'Flash Mob', 'Face Painting', 'Short Film',
-            'Instrumental', 'Solo Dance', 'Duo Dance', 'Group Dance',
-            'Solo Singing', 'Duet Singing', 'Group Singing', 'Rangoli',
-            'Poster Making', 'Treasure Hunt', 'Vihang Letters'
-        ];
-
-        let authToken = localStorage.getItem('orgToken');
-        let loginType = localStorage.getItem('loginType') || 'core';
-        let clubs = [];
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function () {
-            if (authToken) {
-                showDashboard();
-                loadClubs();
-                loadScoreLogs();
-                updateEventDropdown(); // Initialize event dropdown
-            } else {
-                showAuthForm();
-            }
-            initLoginTypeSelector();
-        });
-
-        function initLoginTypeSelector() {
-            const group = document.getElementById('loginTypeGroup');
-            if (!group) return;
-            const buttons = Array.from(group.querySelectorAll('.login-type-button'));
-
-            function setActive(type) {
-                buttons.forEach(button => {
-                    button.classList.toggle('active', button.dataset.loginType === type);
-                });
-                loginType = type;
-                localStorage.setItem('loginType', loginType);
-                updateRoleLabel();
-                updateRoleHint();
-            }
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    setActive(button.dataset.loginType);
-                });
-            });
-
-            setActive(loginType || 'core');
-        }
-
-        function setLoginType(type) {
-            const group = document.getElementById('loginTypeGroup');
-            if (!group) return;
-            const buttons = Array.from(group.querySelectorAll('.login-type-button'));
-            buttons.forEach(button => {
-                button.classList.toggle('active', button.dataset.loginType === type);
-            });
-            loginType = type;
-            localStorage.setItem('loginType', loginType);
-            updateRoleLabel();
-            updateRoleHint();
-        }
-
-        function toggleAuthForm() {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const authTitle = document.getElementById('authTitle');
-
-            if (loginForm.style.display === 'none') {
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-                authTitle.textContent = 'Login';
-            } else {
-                loginForm.style.display = 'none';
-                registerForm.style.display = 'block';
-                authTitle.textContent = 'Register';
-            }
-        }
-
-        function showAuthForm() {
-            document.getElementById('authSection').style.display = 'block';
-            document.getElementById('dashboardSection').style.display = 'none';
-            // Show navbar on login page
-            const navbar = document.getElementById('mainNavbar');
-            if (navbar) navbar.style.display = '';
-        }
-
-        function showDashboard() {
-            document.getElementById('authSection').style.display = 'none';
-            document.getElementById('dashboardSection').style.display = 'block';
-            updateRoleLabel();
-            // Hide navbar on dashboard
-            const navbar = document.getElementById('mainNavbar');
-            if (navbar) navbar.style.display = 'none';
-        }
-
-        function updateRoleLabel() {
-            const label = document.getElementById('roleLabel');
-            if (!label) return;
-            const roleText = loginType === 'coordinator' ? 'Coordinator' : 'Core';
-            label.textContent = `(${roleText})`;
-        }
-
-        function updateRoleHint() {
-            const hint = document.getElementById('roleHint');
-            if (!hint) return;
-            hint.textContent = loginType === 'coordinator'
-                ? 'Coordinator login is limited to assigned event updates.'
-                : 'Core login allows full access to scoring updates.';
-        }
-
-        function updateEventDropdown() {
-            const scoreType = document.getElementById('scoreType').value;
-            const eventSelect = document.getElementById('eventSelect');
-            const genderGroup = document.getElementById('genderGroup');
-            const genderSelect = document.getElementById('genderSelect');
-
-            const events = scoreType === 'sports' ? SPORTS : CULTURE_EVENTS;
-
-            // Show gender box only for sports
-            if (scoreType === 'sports') {
-                genderGroup.style.display = 'block';
-            } else {
-                genderGroup.style.display = 'none';
-            }
-
-            eventSelect.innerHTML = '<option value="">-- Choose an event --</option>';
-            events.forEach(event => {
-                const option = document.createElement('option');
-                option.value = event;
-                option.textContent = event;
-                eventSelect.appendChild(option);
-            });
-
-            // Auto-select gender when sport changes
-            eventSelect.onchange = function () {
-                if (scoreType !== 'sports') return;
-                const selectedSport = SPORTS_DATA.find(s => s.name === eventSelect.value);
-                if (!selectedSport) return;
-
-                const genders = selectedSport.genders;
-                // Reset gender options to only relevant ones
-                genderSelect.innerHTML = '<option value="">-- Choose Gender --</option>';
-                const genderLabels = { male: 'Boys', female: 'Girls', mixed: 'Mixed', neutral: 'Neutral/N/A' };
-                genders.forEach(g => {
-                    const opt = document.createElement('option');
-                    opt.value = g;
-                    opt.textContent = genderLabels[g] || g;
-                    genderSelect.appendChild(opt);
-                });
-
-                // Auto-select if only one gender
-                if (genders.length === 1) {
-                    genderSelect.value = genders[0];
-                    genderGroup.style.display = 'none';
-                } else {
-                    genderSelect.value = '';
-                    genderGroup.style.display = 'block';
-                }
-            };
-        }
-
-        async function handleLogin() {
-            const username = document.getElementById('loginUsername').value;
-            const password = document.getElementById('loginPassword').value;
-            const selectedButton = document.querySelector('.login-type-button.active');
-            loginType = selectedButton ? selectedButton.dataset.loginType : 'core';
-            localStorage.setItem('loginType', loginType);
-
-            if (!username || !password) {
-                showMessage('Please fill all fields', 'error');
-                return;
-            }
-
-            try {
-                let response, data;
-                if (loginType === 'coordinator') {
-                    // Coordinator login: send to /coordinators/login with username, password
-                    response = await fetch(`${API_BASE_URL}/coordinators/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    });
-                } else {
-                    // Core/admin login: send to /auth/login with username, password only
-                    response = await fetch(`${API_BASE_URL}/auth/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username, password })
-                    });
-                }
-                data = await response.json();
-
-                if (response.ok) {
-                    authToken = data.token;
-                    localStorage.setItem('orgToken', authToken);
-                    showMessage('Login successful!', 'success');
-                    setTimeout(() => {
-                        if (loginType === 'coordinator') {
-                            window.location.href = '/coordinator-dashboard';
-                        } else {
-                            window.location.href = '/organizer-dashboard';
-                        }
-                    }, 500);
-                } else {
-                    showMessage(data.message || 'Login failed', 'error');
-                }
-            } catch (error) {
-                showMessage('Error: ' + error.message, 'error');
-            }
-        }
-
-        async function handleRegister() {
-            const name = document.getElementById('regName').value;
-            const username = document.getElementById('regUsername').value;
-            const password = document.getElementById('regPassword').value;
-
-            if (!name || !username || !password) {
-                showMessage('Please fill all fields', 'error');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/auth/register`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, username, password })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    authToken = data.token;
-                    localStorage.setItem('orgToken', authToken);
-                    showMessage('Registration successful!', 'success');
-                    setTimeout(() => {
-                        showDashboard();
-                        loadClubs();
-                        loadScoreLogs();
-                        updateEventDropdown();
-                    }, 500);
-                } else {
-                    showMessage(data.message || 'Registration failed', 'error');
-                }
-            } catch (error) {
-                showMessage('Error: ' + error.message, 'error');
-            }
-        }
-
-        function handleLogout() {
-            authToken = null;
-            localStorage.removeItem('orgToken');
-            showAuthForm();
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('registerForm').style.display = 'none';
-            updateRoleLabel();
-        }
-
-        async function loadClubs() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/clubs`);
-                clubs = await response.json();
-
-                const select = document.getElementById('clubSelect');
-                select.innerHTML = '<option value="">-- Choose a club --</option>';
-
-                clubs.forEach(club => {
-                    const option = document.createElement('option');
-                    option.value = club._id;
-                    option.textContent = club.name;
-                    select.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading clubs:', error);
-            }
-        }
-
-        async function handleScoreUpdate() {
-            const clubId = document.getElementById('clubSelect').value;
-            const scoreType = document.getElementById('scoreType').value;
-            const eventName = document.getElementById('eventSelect').value;
-            const genderValue = document.getElementById('genderSelect').value;
-            const points = parseInt(document.getElementById('pointsInput').value);
-
-            if (!clubId || !eventName || !points) {
-                showMessage('Please fill all fields', 'error');
-                return;
-            }
-            if (scoreType === 'sports' && !genderValue) {
-                showMessage('Please select Male/Female for sports', 'error');
-                return;
-            }
-
-            // Determine endpoint and parameter name based on score type
-            let endpoint, reqBody;
-            if (scoreType === 'sports') {
-                endpoint = `${API_BASE_URL}/clubs/${clubId}/add-sport-points`;
-                reqBody = { sport: eventName, gender: genderValue, points };
-            } else {
-                endpoint = `${API_BASE_URL}/clubs/${clubId}/add-culture-points`;
-                reqBody = { event: eventName, points };
-            }
-
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${authToken}`
-                    },
-                    body: JSON.stringify(reqBody)
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    showMessage(`${scoreType === 'sports' ? 'Sports' : 'Culture'} points updated successfully!`, 'success');
-                    document.getElementById('clubSelect').value = '';
-                    document.getElementById('pointsInput').value = '';
-                    document.getElementById('eventSelect').value = '';
-                    loadScoreLogs();
-                } else {
-                    showMessage(data.message || 'Update failed', 'error');
-                }
-            } catch (error) {
-                showMessage('Error: ' + error.message, 'error');
-            }
-        }
-
-        async function loadScoreLogs() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/score-logs`, {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
-                });
-
-                const logs = await response.json();
-                const tbody = document.getElementById('logsTableBody');
-                tbody.innerHTML = '';
-
-                if (logs.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No updates yet</td></tr>';
-                    return;
-                }
-
-                logs.forEach(log => {
-                    const row = document.createElement('tr');
-                    const date = new Date(log.timestamp).toLocaleString();
-                    const evtLabel = log.gender ? `${log.eventName} (${log.gender})` : log.eventName;
-                    const pointSymbol = log.pointsAdded > 0 ? '+' : '';
-                    const pointColor = log.pointsAdded >= 0 ? '#4CAF50' : '#f44336';
-                    row.innerHTML = `
-                        <td><strong>${log.club}</strong></td>
-                        <td>${log.eventType}</td>
-                        <td>${evtLabel}</td>
-                        <td style="font-weight: bold; color: ${pointColor};">${pointSymbol}${log.pointsAdded}</td>
-                        <td>${log.updatedBy}</td>
-                        <td>${date}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            } catch (error) {
-                console.error('Error loading logs:', error);
-            }
-        }
-
-        function showMessage(message, type) {
-            const messageDiv = document.getElementById('message');
-            messageDiv.textContent = message;
-            messageDiv.className = `message ${type}`;
-            setTimeout(() => {
-                messageDiv.className = 'message';
-            }, 5000);
-        }
-
-        // Auto-refresh logs every 10 seconds
-        setInterval(() => {
-            if (authToken) {
-                loadScoreLogs();
-            }
-        }, 10000);
-
-        // Club Naming Logic
-        function saveClubNames(event) {
-            event.preventDefault();
-            const names = [];
-            for (let i = 1; i <= 5; i++) {
-                const val = document.getElementById('clubName' + i).value.trim();
-                names.push(val);
-            }
-            localStorage.setItem('vihangClubNames', JSON.stringify(names));
-            showMessage('Club names saved!', 'success');
-        }
-
-        // Load club names on dashboard load
-        document.addEventListener('DOMContentLoaded', function () {
-            const saved = localStorage.getItem('vihangClubNames');
-            if (saved) {
-                const names = JSON.parse(saved);
-                for (let i = 1; i <= 5; i++) {
-                    if (names[i-1]) {
-                        document.getElementById('clubName' + i).value = names[i-1];
-                    }
-                }
-            }
-        });
-    </script>
+    
 </body>
 
 </html>

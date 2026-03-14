@@ -40,7 +40,15 @@
     <!-- Club Details Section -->
     <section class="club-details-section">
         <div class="container">
-            <button class="back-btn" onclick="window.location.href='/clubs'">← Back to Clubs</button>
+            <!-- Clubs Navigation Bar -->
+            <nav class="clubs-nav">
+                <div class="clubs-nav-container">
+                    <!-- <h3>Clubs Navigation</h3> -->
+                    <div class="clubs-nav-links" id="clubsNavLinks">
+                        <!-- Club navigation links will be populated by JavaScript -->
+                    </div>
+                </div>
+            </nav>
 
             <div class="club-details" id="clubDetails">
                 <!-- Club details will be populated by JavaScript -->
@@ -68,6 +76,31 @@
                     <h3>Culture Points</h3>
                     <div class="stat-value" id="culturePoints">0</div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <span class="gallery-label">GALLERY</span>
+            <h2 id="galleryTitle">Moments from <span id="galleryClubName">Club</span></h2>
+            <p class="section-intro">Relive the energy, passion and spirit<br>captured in photos</p>
+
+            <div class="gallery-carousel-wrapper">
+                <div class="gallery-carousel" id="galleryCarousel">
+                    <!-- Gallery slides will be populated by JavaScript -->
+                </div>
+                <button class="gallery-btn gallery-btn-prev" id="galleryPrev" aria-label="Previous">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6" />
+                    </svg>
+                </button>
+                <button class="gallery-btn gallery-btn-next" id="galleryNext" aria-label="Next">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6" />
+                    </svg>
+                </button>
             </div>
         </div>
     </section>

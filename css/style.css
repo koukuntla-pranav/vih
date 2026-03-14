@@ -3088,3 +3088,97 @@ body {
         letter-spacing: 1px;
     }
 }
+
+/* ============================================
+   CLUBS NAVIGATION BAR
+   ============================================ */
+
+.clubs-nav {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 0;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-lg);
+}
+
+.clubs-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.clubs-nav h3 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.clubs-nav-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.club-nav-link {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.club-nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.club-nav-link:hover::before {
+    left: 100%;
+}
+
+.club-nav-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.club-nav-link.active {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: white;
+    font-weight: 600;
+}
+
+/* Mobile responsive for clubs navigation */
+@media (max-width: 768px) {
+    .clubs-nav-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .club-nav-link {
+        width: 200px;
+        text-align: center;
+    }
+    
+    .clubs-nav h3 {
+        font-size: 1.2rem;
+    }
+}

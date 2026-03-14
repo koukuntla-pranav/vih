@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const { Club, Sport, Culture, Organizer, User, ScoreLog } = require('./models');
+const { Club, Sport, Culture, Organizer, User, ScoreLog, Game } = require('./models');
 
 
 
@@ -47,6 +47,25 @@ mongoose.connect(process.env.MONGODB_URI)
 // Use routers for authentication and coordinator registration
 const organizerRouter = require('./routes/organizer');
 const coordinatorRouter = require('./routes/coordinator');
+
+// ===================== PUBLIC GAMES ENDPOINTS =====================
+
+// Get all active games (public access for coordinators)
+app.get('/api/games', async (req, res) => {
+    try {
+        const { type, category } = req.query;
+        let filter = { isActive: true };
+        
+        if (type) filter.type = type;
+        if (category) filter.category = category;
+        
+        const games = await Game.find(filter).select('-createdBy -updatedAt').sort({ name: 1 });
+        res.json(games);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
 app.use('/api', organizerRouter);
 app.use('/api', coordinatorRouter);
 
@@ -298,6 +317,108 @@ app.post('/api/init-clubs', async (req, res) => {
     }
 });
 
+
+// ===================== CLUB NAMES & THEMES BULK ENDPOINTS =====================
+// Update a single club's name and/or theme by clubNumber
+app.put('/api/club-names/:clubNumber', verifyToken, async (req, res) => {
+    try {
+        const { clubNumber } = req.params;
+        const { name, theme } = req.body;
+        if (!name && !theme) {
+            return res.status(400).json({ success: false, message: 'Name or theme required' });
+        }
+        const update = {};
+        if (name) update.name = name;
+        if (theme) update.theme = theme;
+        const club = await Club.findOneAndUpdate(
+            { clubNumber: Number(clubNumber) },
+            update,
+            { new: true }
+        );
+        if (!club) {
+            return res.status(404).json({ success: false, message: 'Club not found' });
+        }
+        res.json({ success: true, club });
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error', error: error.message });
+    }
+});
+
+// Get all club names and themes (for mapping)
+app.get('/api/club-names', async (req, res) => {
+    try {
+        const clubs = await Club.find({}, 'clubNumber name theme');
+        res.json(clubs);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// Get all club themes (for mapping)
+app.get('/api/club-themes', async (req, res) => {
+    try {
+        const clubs = await Club.find({}, 'clubNumber theme');
+        res.json(clubs);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+});
+
+// Bulk update club names
+app.put('/api/club-names/bulk', verifyToken, async (req, res) => {
+    try {
+        const { names } = req.body;
+        if (!names || !Array.isArray(names) || names.length !== 5) {
+            return res.status(400).json({ success: false, message: 'Invalid names array' });
+        }
+        for (let i = 0; i < names.length; i++) {
+            const clubNumber = i + 1;
+            await Club.findOneAndUpdate(
+                { clubNumber },
+                { name: names[i] },
+                { new: true }
+            );
+        }
+        res.json({
+            success: true,
+            message: 'Club names updated successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+});
+
+// Bulk update club themes
+app.put('/api/club-themes/bulk', verifyToken, async (req, res) => {
+    try {
+        const { themes } = req.body;
+        if (!themes || !Array.isArray(themes) || themes.length !== 5) {
+            return res.status(400).json({ success: false, message: 'Invalid themes array' });
+        }
+        for (let i = 0; i < themes.length; i++) {
+            const clubNumber = i + 1;
+            await Club.findOneAndUpdate(
+                { clubNumber },
+                { theme: themes[i] },
+                { new: true }
+            );
+        }
+        res.json({
+            success: true,
+            message: 'Club themes updated successfully'
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message
+        });
+    }
+});
 
 // Use frontend router for static/html routes
 const frontendRouter = require('./routes/frontend');

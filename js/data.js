@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://vihang-woya.onrender.com/api";
+const API_BASE_URL = "http://localhost:5000/api";
 
 // Gradient colors for club capsules (edit these to change capsule colors)
 const clubGradients = {
