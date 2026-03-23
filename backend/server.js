@@ -15,6 +15,7 @@ const {
   Gallery,
   ClubLogo,
   TeamMember,
+  Coordinator,
 } = require("./models");
 
 const app = express();
@@ -389,11 +390,22 @@ app.get("/api/images/club-logos", async (req, res) => {
   }
 });
 
+
 // Get team page data from images DB
 app.get("/api/images/teampage", async (req, res) => {
   try {
     const team = await TeamMember.find();
     res.json(team);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Get coordinators images from images DB
+app.get("/api/images/coordinators", async (req, res) => {
+  try {
+    const coordinators = await Coordinator.find();
+    res.json(coordinators);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }

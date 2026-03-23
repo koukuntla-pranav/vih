@@ -87,11 +87,18 @@ const clubLogosSchema = new mongoose.Schema({
     image_url: { type: String, required: true }
 }, { collection: 'Club-logos' });
 
+
 const teamPageSchema = new mongoose.Schema({
     category: { type: String, required: true },
     Name: { type: String, required: true },
     image_url: { type: String, required: true }
 }, { collection: 'Teampage' });
+
+// Coordinators Schema (for images DB)
+const coordinatorsSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    image_url: { type: String, required: true }
+}, { collection: 'Coordinators' });
 
 module.exports = {
     Club: mainDb.model('Club', clubSchema),
@@ -102,5 +109,6 @@ module.exports = {
     ClubHome: imageDb.model('ClubHome', clubHomeSchema),
     Gallery: imageDb.model('Gallery', GallerySchema),
     ClubLogo: imageDb.model('ClubLogo', clubLogosSchema),
-    TeamMember: imageDb.model('TeamMember', teamPageSchema)
+    TeamMember: imageDb.model('TeamMember', teamPageSchema),
+    Coordinator: imageDb.model('Coordinator', coordinatorsSchema)
 };

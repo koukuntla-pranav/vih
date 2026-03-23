@@ -6,20 +6,27 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (clubId) {
         // Fetch logos
         let clubLogosData = [];
+        let coordinatorsData = [];
         try {
             const res = await fetch('https://vihang-woya.onrender.com/api/images/club-logos');
             if (res.ok) clubLogosData = await res.json();
         } catch (e) {
             console.error('Failed to fetch club logos', e);
         }
-        
-        displayClubDetails(clubId, clubLogosData); // Pass the logo data
+        try {
+            if (typeof fetchCoordinatorsImages === 'function') {
+                coordinatorsData = await fetchCoordinatorsImages();
+            }
+        } catch (e) {
+            console.error('Failed to fetch coordinators images', e);
+        }
+        displayClubDetails(clubId, clubLogosData, coordinatorsData); // Pass the logo and coordinators data
     } else {
         window.location.href = 'clubs.html';
     }
 });
 
-function displayClubDetails(clubId, clubLogosData = []) {
+function displayClubDetails(clubId, clubLogosData = [], coordinatorsData = []) {
     const club = clubs.find(c => c.id === clubId);
 
     if (!club) {
@@ -51,7 +58,7 @@ function displayClubDetails(clubId, clubLogosData = []) {
     `;
 
     // Render team members
-    renderTeamMembers(club);
+    renderTeamMembers(club, coordinatorsData);
 
     // Update stats
     document.getElementById('totalPoints').textContent = club.totalPoints;
@@ -61,33 +68,40 @@ function displayClubDetails(clubId, clubLogosData = []) {
     document.title = `${club.name} - Vihaang`;
 }
 
-function renderTeamMembers(club) {
+function renderTeamMembers(club, coordinatorsData = []) {
     const teamGrid = document.getElementById('teamGrid');
     teamGrid.innerHTML = '';
+
+    // Try to match coordinator images from API by name (case-insensitive)
+    function getCoordinatorImage(name, fallback) {
+        if (!name) return fallback;
+        const found = coordinatorsData.find(c => c.name && c.name.toLowerCase() === name.toLowerCase());
+        return found && found.image_url ? found.image_url : fallback;
+    }
 
     const members = [
         {
             name: club.captainBoy,
             role: 'Coordinator (Boy)',
-            image: club.captainBoyImage,
+            image: getCoordinatorImage(club.captainBoy, club.captainBoyImage),
             type: 'primary'
         },
         {
             name: club.captainGirl,
             role: 'Coordinator (Girl)',
-            image: club.captainGirlImage,
+            image: getCoordinatorImage(club.captainGirl, club.captainGirlImage),
             type: 'primary'
         },
         {
             name: club.viceCaptainBoy,
             role: 'Vice-Coordinator (Boy)',
-            image: club.viceCaptainBoyImage,
+            image: getCoordinatorImage(club.viceCaptainBoy, club.viceCaptainBoyImage),
             type: 'secondary'
         },
         {
             name: club.viceCaptainGirl,
             role: 'Vice-Coordinator (Girl)',
-            image: club.viceCaptainGirlImage,
+            image: getCoordinatorImage(club.viceCaptainGirl, club.viceCaptainGirlImage),
             type: 'secondary'
         }
     ];
@@ -97,7 +111,7 @@ function renderTeamMembers(club) {
         memberCard.className = `member-card ${member.type}`;
 
         memberCard.innerHTML = `
-            <div class="member-image">${member.image}</div>
+           <div class="member-image"><img src="${member.image}" alt="${member.name}" /></div>
             <div class="member-name">${member.name}</div>
             <div class="member-role">${member.role}</div>
         `;

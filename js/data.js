@@ -5,7 +5,7 @@ const clubGradients = {
   "Ether Rox": "linear-gradient(180deg, #eeebff, #2c2083)",
   "Hydro Heroes": "linear-gradient(180deg, #b1f8fd, #2002b7)",
   "Gravitas Elites": "linear-gradient(180deg, #eadcc8, #814402)",
-  Firestorm: "linear-gradient(200deg, #ffcc91,rgb(244, 42, 42))",
+  "FireStorm": "linear-gradient(200deg, #ffcc91,rgb(244, 42, 42))",
   "Aero Knights": "linear-gradient(180deg, #ffffff, #6e9fb6)",
 };
 
@@ -63,12 +63,12 @@ async function fetchClubsData() {
           captainGirl: "Kanika Gupta",
           viceCaptainBoy: "Shivank Bramhe",
           viceCaptainGirl: "Vishu Bishnoi",
-          captainBoyImage: "👨‍💼",
-          captainGirlImage: "👩‍💼",
+          captainBoyImage: "../club-3-images/Vinit_CC_club_02.png",
+          captainGirlImage: "../club-3-images/CC_Club03.jpg",
           viceCaptainBoyImage: "👨‍💼",
-          viceCaptainGirlImage: "👩‍💼",
+          viceCaptainGirlImage: "../club-3-images/Club3VC.jpg",
         },
-        Firestorm: {
+        "FireStorm": {
           element: `<img src="../images/clubs_logos/club4_logo.png" alt="Firestorm" class="club-logo">`,
           description:
             "Blazing passion, relentless drive.",
@@ -77,7 +77,7 @@ async function fetchClubsData() {
           captainGirl: "Kavi Sheoran",
           viceCaptainBoy: "Shivam Yadav",
           viceCaptainGirl: "Aashtha Guptha",
-          captainBoyImage: "👨‍💼",
+          captainBoyImage: "club 3 images/",
           captainGirlImage: "👩‍💼",
           viceCaptainBoyImage: "👨‍💼",
           viceCaptainGirlImage: "👩‍💼",
