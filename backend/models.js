@@ -96,8 +96,11 @@ const teamPageSchema = new mongoose.Schema({
 
 // Coordinators Schema (for images DB)
 const coordinatorsSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    image_url: { type: String, required: true }
+    club: { type: String, required: true },
+    captainBoyImage: { type: String },
+    captainGirlImage: { type: String },
+    viceCaptainBoyImage: { type: String },
+    viceCaptainGirlImage: { type: String }
 }, { collection: 'Coordinators' });
 
 module.exports = {

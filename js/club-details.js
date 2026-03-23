@@ -14,9 +14,8 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error('Failed to fetch club logos', e);
         }
         try {
-            if (typeof fetchCoordinatorsImages === 'function') {
-                coordinatorsData = await fetchCoordinatorsImages();
-            }
+            const coordRes = await fetch('https://vihang-woya.onrender.com/api/images/coordinators');
+            if (coordRes.ok) coordinatorsData = await coordRes.json();
         } catch (e) {
             console.error('Failed to fetch coordinators images', e);
         }
@@ -83,36 +82,34 @@ function renderTeamMembers(club, coordinatorsData = []) {
     const teamGrid = document.getElementById('teamGrid');
     teamGrid.innerHTML = '';
 
-    // Try to match coordinator images from API by name (case-insensitive)
-    function getCoordinatorImage(name, fallback) {
-        if (!name) return fallback;
-        const found = coordinatorsData.find(c => c.name && c.name.toLowerCase() === name.toLowerCase());
-        return found && found.image_url ? found.image_url : fallback;
-    }
+    // Find coordinator entry for this club by matching club name
+    const coordEntry = coordinatorsData.find(
+        c => c.club && c.club.toLowerCase() === club.name.toLowerCase()
+    );
 
     const members = [
         {
             name: club.captainBoy,
             role: 'Coordinator (Boy)',
-            image: getCoordinatorImage(club.captainBoy, club.captainBoyImage),
+            image: (coordEntry && coordEntry.captainBoyImage) || club.captainBoyImage,
             type: 'primary'
         },
         {
             name: club.captainGirl,
             role: 'Coordinator (Girl)',
-            image: getCoordinatorImage(club.captainGirl, club.captainGirlImage),
+            image: (coordEntry && coordEntry.captainGirlImage) || club.captainGirlImage,
             type: 'primary'
         },
         {
             name: club.viceCaptainBoy,
             role: 'Vice-Coordinator (Boy)',
-            image: getCoordinatorImage(club.viceCaptainBoy, club.viceCaptainBoyImage),
+            image: (coordEntry && coordEntry.viceCaptainBoyImage) || club.viceCaptainBoyImage,
             type: 'secondary'
         },
         {
             name: club.viceCaptainGirl,
             role: 'Vice-Coordinator (Girl)',
-            image: getCoordinatorImage(club.viceCaptainGirl, club.viceCaptainGirlImage),
+            image: (coordEntry && coordEntry.viceCaptainGirlImage) || club.viceCaptainGirlImage,
             type: 'secondary'
         }
     ];
