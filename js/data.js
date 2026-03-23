@@ -5,7 +5,7 @@ const clubGradients = {
   "Ether Rox": "linear-gradient(180deg, #eeebff, #2c2083)",
   "Hydro Heroes": "linear-gradient(180deg, #b1f8fd, #2002b7)",
   "Gravitas Elites": "linear-gradient(180deg, #eadcc8, #814402)",
-  "FireStorm": "linear-gradient(200deg, #ffcc91,rgb(244, 42, 42))",
+  FireStorm: "linear-gradient(200deg, #ffcc91,rgb(244, 42, 42))",
   "Aero Knights": "linear-gradient(180deg, #ffffff, #6e9fb6)",
 };
 
@@ -28,8 +28,7 @@ async function fetchClubsData() {
       const clubDetails = {
         "Ether Rox": {
           element: `<img src="../images/clubs_logos/club1_logo.png" alt="Ether Rox" class="club-logo">`,
-          description:
-            "Cosmic energy, boundless reach.",
+          description: "Cosmic energy, boundless reach.",
           backgroundColor: "#f9f6fc",
           captainBoy: "Sameer Bobde",
           captainGirl: "Aabriti Saha",
@@ -39,11 +38,12 @@ async function fetchClubsData() {
           captainGirlImage: "👩‍💼",
           viceCaptainBoyImage: "👨‍💼",
           viceCaptainGirlImage: "👩‍💼",
+          instagramLink:
+            "https://www.instagram.com/ether_rox?igsh=MWFqMnVqbzhyYTA2bw==",
         },
         "Gravitas Elites": {
           element: `<img src="../images/clubs_logos/club2_logo.PNG" alt="Gravitas Elites" class="club-logo">`,
-          description:
-            "Steady stance, absolute strength.",
+          description: "Steady stance, absolute strength.",
           backgroundColor: "#fcf7f2",
           captainBoy: "Rapelli S Prathik",
           captainGirl: "Kottapalli Navina",
@@ -53,6 +53,8 @@ async function fetchClubsData() {
           captainGirlImage: "👩‍💼",
           viceCaptainBoyImage: "👨‍💼",
           viceCaptainGirlImage: "👩‍💼",
+          instagramLink:
+            "https://www.instagram.com/gravitaselites?igsh=MWFnbnI1bXYyZGZkdQ==",
         },
 
         "Hydro Heroes": {
@@ -67,11 +69,12 @@ async function fetchClubsData() {
           captainGirlImage: "../club-3-images/CC_Club03.jpg",
           viceCaptainBoyImage: "👨‍💼",
           viceCaptainGirlImage: "../club-3-images/Club3VC.jpg",
+          instagramLink:
+            "https://www.instagram.com/hydro__heroes?igsh=MWpuamV2cGtlNXV0ZQ==",
         },
-        "FireStorm": {
+        FireStorm: {
           element: `<img src="../images/clubs_logos/club4_logo.png" alt="Firestorm" class="club-logo">`,
-          description:
-            "Blazing passion, relentless drive.",
+          description: "Blazing passion, relentless drive.",
           backgroundColor: "#fff8f8",
           captainBoy: "Shashi Kumar ",
           captainGirl: "Kavi Sheoran",
@@ -81,12 +84,13 @@ async function fetchClubsData() {
           captainGirlImage: "👩‍💼",
           viceCaptainBoyImage: "👨‍💼",
           viceCaptainGirlImage: "👩‍💼",
+          instagramLink:
+            "https://www.instagram.com/firestorm_vihang26?igsh=MTBkMGQ3b3hjMGJkaw==",
         },
 
         "Aero Knights": {
           element: `<img src="../images/clubs_logos/Club_5 logo.png" alt="Aero Knights" class="club-logo">`,
-          description:
-            "Swift movement, boundless freedom.",
+          description: "Swift movement, boundless freedom.",
           backgroundColor: "#f4f9fe",
           captainBoy: "Divyansh P Singh",
           captainGirl: "Sweta Tiwari",
@@ -96,6 +100,8 @@ async function fetchClubsData() {
           captainGirlImage: "👩‍💼",
           viceCaptainBoyImage: "👨‍💼",
           viceCaptainGirlImage: "👩‍💼",
+          instagramLink:
+            "https://www.instagram.com/aeroknights__vihang26?igsh=N2Vqam1rcDBobzdk",
         },
       };
 

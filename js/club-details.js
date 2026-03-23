@@ -52,6 +52,17 @@ function displayClubDetails(clubId, clubLogosData = [], coordinatorsData = []) {
                     <h1>${club.name}</h1>
                     <h3 style="color: ${club.color}; margin-bottom: 10px;">Element: ${club.theme}</h3>
                     <p>${club.description}</p>
+                    ${club.instagramLink ? `
+                    <div style="margin-top: 15px;">
+                        <a href="${club.instagramLink}" target="_blank" class="club-social-icon" style="color: #ff6b6b; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 500; transition: opacity 0.3s; opacity: 0.9;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                            Follow on Instagram
+                        </a>
+                    </div>` : ''}
                 </div>
             </div>
         </div>
