@@ -91,7 +91,7 @@ async function fetchClubsData() {
           captainBoy: "Divyansh P Singh",
           captainGirl: "Sweta Tiwari",
           viceCaptainBoy: "Yash Ingalkar",
-          viceCaptainGirl: "Alisha Chandankhede",
+          viceCaptainGirl: "Anusree V",
           captainBoyImage: "👨‍💼",
           captainGirlImage: "👩‍💼",
           viceCaptainBoyImage: "👨‍💼",
