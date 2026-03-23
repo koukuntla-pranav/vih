@@ -417,6 +417,10 @@ body {
    HERO SECTION
    ============================================ */
 
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
 .hero {
   /* Set minimum height to 100vh to fill the viewport */
   min-height: 100vh;
@@ -462,8 +466,8 @@ body {
 }
 
 .presents-vnit {
-  font-size: 2.5rem;
-  font-weight: 400;
+  font-size: 3rem;
+  font-weight: 600;
   letter-spacing: 2px;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
   line-height: 1;
@@ -473,7 +477,7 @@ body {
 .presents-text {
   font-size: 0.45rem;
   font-weight: 600;
-  letter-spacing: 7px;
+  letter-spacing: 10px;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
   margin-top: 0.3px;
   margin-right: -12px;
@@ -553,8 +557,8 @@ body {
 }
 
 .hero-bottom-item.location {
-  font-size: 1rem;
-  letter-spacing: 0.75px;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
 }
 
@@ -588,7 +592,6 @@ body {
   color: #ffffff;
   /* Changes stroke to orange via currentColor */
 }
-
 /* Responsive adjustments for Hero */
 @media (max-width: 900px) {
   .presents-vnit {
