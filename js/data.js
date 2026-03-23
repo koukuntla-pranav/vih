@@ -358,6 +358,26 @@ const cultureEvents = [
   { id: 23, name: "Vihang Letters" },
 ];
 
+// ============================================
+// PAGE LOADER — fade out once page is fully loaded
+// ============================================
+(function() {
+  const loaderStart = Date.now();
+  const MIN_DISPLAY_MS = 1250; // minimum loader display time (half circle of 2.5s spin)
+
+  window.addEventListener("load", () => {
+    const loader = document.getElementById("loader-wrapper");
+    if (!loader) return;
+    const elapsed = Date.now() - loaderStart;
+    const remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
+
+    setTimeout(() => {
+      loader.classList.add("fade-out");
+      setTimeout(() => { loader.style.display = "none"; }, 600);
+    }, remaining);
+  });
+})();
+
 // Mobile Navbar Logic - Global
 document.addEventListener("DOMContentLoaded", () => {
   const mobileMenu = document.getElementById("mobile-menu");
