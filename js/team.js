@@ -109,8 +109,8 @@ function renderTeamData() {
                         </div>
                         <div class="team-member-details">
                             <h3 class="team-member-name">${member.Name}</h3>
-                            <p class="team-member-role">${category === 'Professors In-Charge' ? '' : category}</p>
-                            ${member.sub_cat ? `<p class="team-member-subrole" style="font-size: 0.9em; color: #ff6b6b; opacity: 0.8; margin-top: 5px;">${member.sub_cat}</p>` : ''}
+                            ${(!profCategories.includes(category) && member.sub_cat) ? '' : `<p class="team-member-role" ${!member.sub_cat ? 'style="color: #ff6b6b; opacity: 0.8;"' : ''}>${category === 'Professors In-Charge' ? '' : category}</p>`}
+                            ${member.sub_cat ? `<p class="team-member-subrole" style="font-size: 0.9em; color: #ff6b6b; opacity: 0.8; margin-top: 2px;">${member.sub_cat}</p>` : ''}
                         </div>
                     </div>
             `;
