@@ -172,6 +172,46 @@ function startCountdown() {
         const now = new Date().getTime();
         const distance = countDownDate - now;
 
+        // If the count down is finished, trigger fireworks and then write some text
+        if (distance < 0) {
+            clearInterval(x);
+            
+            // Set flip cards to 00
+            updateFlipValue('days', '00');
+            updateFlipValue('hours', '00');
+            updateFlipValue('minutes', '00');
+            updateFlipValue('seconds', '00');
+            
+            // Trigger confetti
+            if (typeof confetti !== 'undefined') {
+                const duration = 3000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 45, spread: 360, ticks: 100, zIndex: 100 };
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                const intervalId = setInterval(function() {
+                    const timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(intervalId);
+                    }
+
+                    const particleCount = 150 * (timeLeft / duration);
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 } }));
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 } }));
+                }, 150);
+            }
+
+            setTimeout(() => {
+                document.getElementById("countdown").innerHTML = "<div class='its-time-banner'>IT'S TIME!</div>";
+            }, 3000);
+            
+            return;
+        }
+
         // Time calculations for days, hours, minutes and seconds
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -188,12 +228,6 @@ function startCountdown() {
         updateFlipValue('hours', hoursStr);
         updateFlipValue('minutes', minutesStr);
         updateFlipValue('seconds', secondsStr);
-
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = "<div class='time-box'><span class='time-value'>IT'S</span></div><div class='time-box'><span class='time-value'>TIME!</span></div>";
-        }
     }, 1000);
 }
 
