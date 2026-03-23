@@ -424,6 +424,7 @@ body {
 .hero {
   /* Set minimum height to 100vh to fill the viewport */
   min-height: 100vh;
+  min-height: 100dvh;
   /* Placeholder background image from unsplash (concert/crowd vibe) */
   background: url("../images/background.jpeg") center/cover no-repeat;
   position: relative;
@@ -513,6 +514,7 @@ body {
   -webkit-text-stroke: 1px rgb(226, 226, 226);
   /*text-shadow: 0 0 20px rgba(209, 190, 190, 0.4);*/
   letter-spacing: -1px;
+  white-space: nowrap;
 }
 
 .hero-btn {
@@ -625,7 +627,7 @@ body {
   }
 
   .hero-content h1 {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 13vw, 4rem);
   }
 
   .hero-bottom-bar {
