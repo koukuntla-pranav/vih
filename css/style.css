@@ -3280,8 +3280,9 @@ body {
   height: 150px;
   border-radius: 50%;
   border: 3px solid transparent;
-  border-top-color: #ff6b6b;
-  border-right-color: #4ecdc4;
+  border-top-color: #6a0dad;
+  border-right-color: #8B4513;
+  border-bottom-color: #1e90ff;
   animation: spinLoader 2.5s linear infinite;
   z-index: 1;
 }
@@ -3295,7 +3296,9 @@ body {
   bottom: 6px;
   border-radius: 50%;
   border: 2px solid transparent;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
+  border-top-color: #1e90ff;
+  border-right-color: #ff8c00;
+  border-bottom-color: #888888;
   animation: spinLoader 0.75s linear infinite reverse;
 }
 
