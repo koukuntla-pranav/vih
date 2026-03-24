@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             console.error('Failed to fetch coordinators images', e);
         }
         displayClubDetails(clubId, clubLogosData, coordinatorsData); // Pass the logo and coordinators data
+
+        // Show trophy animation if this club is winner or runner-up
+        const club = clubs.find(c => c.id === clubId);
+        if (club && (club.rank === 'winner' || club.rank === 'runner-up')) {
+            showTrophyAnimation(club);
+        }
     } else {
         window.location.href = 'clubs.html';
     }
@@ -126,4 +132,122 @@ function renderTeamMembers(club, coordinatorsData = []) {
 
         teamGrid.appendChild(memberCard);
     });
+}
+
+// ============================================
+// TROPHY / CUP ANIMATION FOR WINNER/RUNNER-UP
+// ============================================
+function showTrophyAnimation(club) {
+    const isWinner = club.rank === 'winner';
+    const emoji = isWinner ? '🏆' : '🥈';
+    const title = isWinner ? 'WINNER!' : 'RUNNER-UP!';
+    const gradientBg = isWinner
+        ? 'radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%)'
+        : 'radial-gradient(circle, rgba(192,192,192,0.15) 0%, transparent 70%)';
+    const glowColor = isWinner ? 'rgba(255, 215, 0, 0.6)' : 'rgba(192, 192, 192, 0.6)';
+    const bannerBg = isWinner
+        ? 'linear-gradient(135deg, #ffd700, #ff8c00)'
+        : 'linear-gradient(135deg, #c0c0c0, #888)';
+
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.id = 'trophyOverlay';
+    overlay.style.cssText = `
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        z-index: 10000; display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.7); opacity: 0;
+        transition: opacity 0.5s ease; cursor: pointer;
+    `;
+
+    // Trophy emoji
+    const trophy = document.createElement('div');
+    trophy.style.cssText = `
+        font-size: 0; transition: font-size 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        filter: drop-shadow(0 0 30px ${glowColor});
+        animation: trophyPulse 2s ease-in-out infinite;
+    `;
+    trophy.textContent = emoji;
+
+    // Club name & rank banner
+    const banner = document.createElement('div');
+    banner.style.cssText = `
+        background: ${bannerBg}; color: #fff; padding: 15px 40px;
+        border-radius: 50px; font-family: 'Outfit', sans-serif;
+        font-size: 1.4rem; font-weight: 800; letter-spacing: 2px;
+        text-transform: uppercase; margin-top: 20px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        transform: translateY(30px); opacity: 0;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s;
+    `;
+    banner.textContent = `${club.name} — ${title}`;
+
+    // Dismiss text
+    const dismiss = document.createElement('div');
+    dismiss.style.cssText = `
+        color: rgba(255,255,255,0.5); font-size: 0.85rem;
+        margin-top: 20px; font-family: 'Outfit', sans-serif;
+        transform: translateY(20px); opacity: 0;
+        transition: all 0.5s ease 1.2s;
+    `;
+    dismiss.textContent = 'Tap anywhere to continue';
+
+    overlay.appendChild(trophy);
+    overlay.appendChild(banner);
+    overlay.appendChild(dismiss);
+    document.body.appendChild(overlay);
+
+    // Add pulse keyframes
+    if (!document.getElementById('trophyPulseStyle')) {
+        const style = document.createElement('style');
+        style.id = 'trophyPulseStyle';
+        style.textContent = `
+            @keyframes trophyPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.08); }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Animate in
+    requestAnimationFrame(() => {
+        overlay.style.opacity = '1';
+        trophy.style.fontSize = '8rem';
+        banner.style.transform = 'translateY(0)';
+        banner.style.opacity = '1';
+        dismiss.style.transform = 'translateY(0)';
+        dismiss.style.opacity = '1';
+    });
+
+    // Trigger confetti with themed colors
+    setTimeout(() => {
+        if (typeof confetti !== 'undefined') {
+            const colors = isWinner ? ['#ffd700', '#ff8c00', '#ffec80'] : ['#c0c0c0', '#888888', '#e8e8e8'];
+            const duration = 3000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 40, spread: 360, ticks: 80, zIndex: 10001, colors };
+
+            const intervalId = setInterval(() => {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(intervalId);
+                const particleCount = 80 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() * 0.4 } }));
+            }, 200);
+        }
+    }, 500);
+
+    // Dismiss on click
+    overlay.addEventListener('click', () => {
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 500);
+    });
+
+    // Auto dismiss after 6 seconds
+    setTimeout(() => {
+        if (document.body.contains(overlay)) {
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.remove(), 500);
+        }
+    }, 6000);
 }

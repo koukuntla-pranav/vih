@@ -272,6 +272,46 @@ app.get("/api/clubs/:clubId/breakdown", async (req, res) => {
   }
 });
 
+// Finalize results — declare winner and runner-up
+app.post("/api/clubs/finalize-results", verifyToken, async (req, res) => {
+  try {
+    // Clear all existing ranks
+    await Club.updateMany({}, { rank: null });
+
+    // Sort by totalPoints descending and assign ranks
+    const sorted = await Club.find().sort({ totalPoints: -1 });
+
+    if (sorted.length >= 1) {
+      sorted[0].rank = "winner";
+      await sorted[0].save();
+    }
+    if (sorted.length >= 2) {
+      sorted[1].rank = "runner-up";
+      await sorted[1].save();
+    }
+
+    res.json({
+      message: "Results finalized!",
+      winner: sorted[0]?.name || null,
+      runnerUp: sorted[1]?.name || null,
+      clubs: sorted,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+// Reset results — clear winner and runner-up
+app.post("/api/clubs/reset-results", verifyToken, async (req, res) => {
+  try {
+    await Club.updateMany({}, { rank: null });
+    const clubs = await Club.find().sort({ totalPoints: -1 });
+    res.json({ message: "Results reset!", clubs });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 // ===================== SPORT EVENT ENDPOINTS =====================
 
 // Get all sports

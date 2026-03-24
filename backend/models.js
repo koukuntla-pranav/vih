@@ -23,6 +23,9 @@ const clubSchema = new mongoose.Schema({
         points: { type: Number, default: 0 }
     }],
 
+    // Winner/Runner-up rank (set via finalize-results)
+    rank: { type: String, enum: ['winner', 'runner-up', null], default: null },
+
     createdAt: { type: Date, default: Date.now }
 });
 

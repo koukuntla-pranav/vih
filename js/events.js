@@ -34,11 +34,13 @@ function renderLeaderboard() {
     `;
 
     sortedClubs.forEach((club, index) => {
+        const badge = club.rank === 'winner' ? ' 🏆' : club.rank === 'runner-up' ? ' 🥈' : '';
+        const rowStyle = club.rank === 'winner' ? 'background: linear-gradient(90deg, #fff9e6, #fff3cc);' : club.rank === 'runner-up' ? 'background: linear-gradient(90deg, #f5f5f5, #e8e8e8);' : '';
         headerHTML += `
-            <tr>
+            <tr style="${rowStyle}">
                 <td class="rank">${index + 1}</td>
                 <td class="club-capsule-cell"><div class="club-capsule" style="background: ${getClubGradient(club.name, club.color)};"></div></td>
-                <td class="club-name-cell">${club.name}</td>
+                <td class="club-name-cell">${club.name}${badge}</td>
                 <td class="points">${club.sportsPoints}</td>
                 <td class="points">${club.culturePoints}</td>
                 <td class="points" style="font-weight: bold; color: black;">${club.totalPoints}</td>
@@ -49,6 +51,32 @@ function renderLeaderboard() {
     headerHTML += '</tbody>';
     table.innerHTML = headerHTML;
     leaderboard.appendChild(table);
+
+    // Trigger confetti if results are finalized
+    const hasWinner = clubs.some(c => c.rank === 'winner');
+    if (hasWinner) {
+        triggerWinnerConfetti();
+    }
+}
+
+function triggerWinnerConfetti() {
+    if (typeof confetti === 'undefined') return;
+    const duration = 4000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 35, spread: 360, ticks: 80, zIndex: 100 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    const intervalId = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(intervalId);
+
+        const particleCount = 100 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 } }));
+    }, 200);
 }
 
 function setupTabs() {

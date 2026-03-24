@@ -386,6 +386,21 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Finalize Results -->
+      <div class="update-section" style="border: 2px solid #ffd700; background: linear-gradient(135deg, #fffdf0, #fff8e1);">
+        <h3 style="border-bottom-color: #ffd700; color: #b8860b;">🏆 Finalize Event Results</h3>
+        <p style="color: #666; margin-bottom: 1rem;">Declare the winner and runner-up based on current total points. This will trigger confetti animations on the public pages.</p>
+        <div id="finalizeMessage" class="message"></div>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <button class="submit-btn" onclick="handleFinalizeResults()" style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #333; font-size: 1.1rem; flex: 1; min-width: 200px;">
+            🏆 Finalize Results — Declare Winner & Runner-up
+          </button>
+          <button class="submit-btn" onclick="handleResetResults()" style="background: #dc3545; flex: 0 0 auto; min-width: 150px;">
+            🔄 Reset Results
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -871,6 +886,59 @@
       setTimeout(() => {
         messageDiv.className = "message";
       }, 5000);
+    }
+
+    function showFinalizeMessage(message, type) {
+      const div = document.getElementById("finalizeMessage");
+      div.textContent = message;
+      div.className = `message ${type}`;
+      setTimeout(() => { div.className = "message"; }, 5000);
+    }
+
+    async function handleFinalizeResults() {
+      if (!confirm("⚠️ Are you sure you want to finalize results?\n\nThis will declare the top-scoring club as WINNER and the second as RUNNER-UP.\nConfetti animations will appear on the public website.")) {
+        return;
+      }
+      try {
+        const response = await fetch(`${API_BASE_URL}/clubs/finalize-results`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          showFinalizeMessage(`🏆 Winner: ${data.winner} | 🥈 Runner-up: ${data.runnerUp}`, "success");
+        } else {
+          showFinalizeMessage(data.message || "Failed to finalize results", "error");
+        }
+      } catch (error) {
+        showFinalizeMessage("Error: " + error.message, "error");
+      }
+    }
+
+    async function handleResetResults() {
+      if (!confirm("⚠️ Are you sure you want to RESET results?\n\nThis will remove the winner and runner-up status from all clubs.\nConfetti animations will stop on the public website.")) {
+        return;
+      }
+      try {
+        const response = await fetch(`${API_BASE_URL}/clubs/reset-results`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          showFinalizeMessage("Results have been reset!", "success");
+        } else {
+          showFinalizeMessage(data.message || "Failed to reset results", "error");
+        }
+      } catch (error) {
+        showFinalizeMessage("Error: " + error.message, "error");
+      }
     }
 
     // Auto-refresh logs every 10 seconds
