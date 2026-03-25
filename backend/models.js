@@ -5,7 +5,7 @@ const { mainDb, imageDb} = require('./db');
 const clubSchema = new mongoose.Schema({
     name: { type: String, required: true },
     theme: { type: String, required: true },
-    color: { type: String, required: true },
+    color: { type: String, default: '' },
     totalPoints: { type: Number, default: 0 },
     sportsPoints: { type: Number, default: 0 },
     culturePoints: { type: Number, default: 0 },
@@ -24,7 +24,7 @@ const clubSchema = new mongoose.Schema({
     }],
 
     // Winner/Runner-up rank (set via finalize-results)
-    rank: { type: String, enum: ['winner', 'runner-up', null], default: null },
+    rank: { type: String, enum: ['winner', 'runner-up', '', null], default: null },
 
     createdAt: { type: Date, default: Date.now }
 });

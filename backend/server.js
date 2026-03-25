@@ -183,7 +183,7 @@ app.post(
         eventName: sport,
         gender: gender,
         pointsAdded: points,
-        updatedBy: organizer.name,
+        updatedBy: organizer ? organizer.name : "Organizer",
       });
 
       res.json({
@@ -236,7 +236,7 @@ app.post(
         eventType: "culture",
         eventName: event,
         pointsAdded: points,
-        updatedBy: organizer.name,
+        updatedBy: organizer ? organizer.name : "Organizer",
       });
 
       res.json({
