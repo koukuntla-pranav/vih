@@ -253,22 +253,6 @@ function updateGenderForSport(sport) {
     document.getElementById('sportsTableContainer').innerHTML = '<div class="placeholder">Please select gender to view standings</div>';
 }
 
-// populateCultureDropdown is deprecated in favor of buildCultureTypeDropdown
-/*
-function populateCultureDropdown() {
-    const select = document.getElementById('cultureEventSelect');
-    const dropdown = buildCustomDropdown(select, '-- Choose a Culture Event --');
-
-    cultureEvents.forEach(event => {
-        const option = document.createElement('option');
-        option.value = event.id;
-        option.textContent = event.name;
-        select.appendChild(option);
-
-        addDropdownOption(dropdown, event.id, event.name);
-    });
-}
-*/
 
 function buildGenderDropdown() {
     const select = document.getElementById('genderSelect');

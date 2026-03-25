@@ -78,17 +78,6 @@
       color: rgb(14, 13, 13);
     }
 
-    .toggle-auth {
-      text-align: center;
-      margin-top: 1rem;
-      color: #666;
-    }
-
-    .toggle-auth a {
-      color: #667eea;
-      cursor: pointer;
-      text-decoration: underline;
-    }
 
     .dashboard-header {
       background: white;
@@ -236,7 +225,9 @@
       }
     }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
 </head>
 
 <body>
@@ -264,49 +255,20 @@
     </div>
   </nav>
   <div class="organizer-dashboard">
+    <div id="message" class="message" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 1000; display: none;"></div>
     <!-- Auth Section -->
     <div id="authSection" class="auth-container">
       <div class="auth-section">
-        <h2 id="authTitle">Login</h2>
-        <div id="message" class="message"></div>
-
-        <!-- Login Form -->
-        <div id="loginForm">
-          <div class="form-group">
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" placeholder="Enter your email" />
-          </div>
-          <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" placeholder="Enter your password" />
-          </div>
-          <button class="btn" onclick="handleLogin()">Login</button>
-          <!-- 
-                    <div class="toggle-auth">
-                        Don't have an account? <a onclick="toggleAuthForm()">Register</a>
-                    </div>   -->
+        <h2>Login</h2>
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="Enter your email" />
         </div>
-
-        <!-- 
-                <div id="registerForm" style="display: none;">
-                    <div class="form-group">
-                        <label for="regName">Name</label>
-                        <input type="text" id="regName" placeholder="Enter your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="regEmail">Email</label>
-                        <input type="email" id="regEmail" placeholder="Enter your email">
-                    </div>
-                    <div class="form-group">
-                        <label for="regPassword">Password</label>
-                        <input type="password" id="regPassword" placeholder="Create a password">
-                    </div>
-                    <button class="btn" onclick="handleRegister()">Register</button>
-                    <div class="toggle-auth">
-                        Already have an account? <a onclick="toggleAuthForm()">Login</a>
-                    </div>
-                </div>
-                Register Form -->
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" />
+        </div>
+        <button class="btn" onclick="handleLogin()">Login</button>
       </div>
     </div>
 
@@ -316,8 +278,6 @@
         <h1>🏆 Organizer Dashboard</h1>
         <button class="logout-btn" onclick="handleLogout()">Logout</button>
       </div>
-
-      <div id="message" class="message"></div>
 
       <!-- Update Club Scores -->
       <div class="update-section">
@@ -394,15 +354,19 @@
       </div>
 
       <!-- Finalize Results -->
-      <div class="update-section" style="border: 2px solid #ffd700; background: linear-gradient(135deg, #fffdf0, #fff8e1);">
+      <div class="update-section"
+        style="border: 2px solid #ffd700; background: linear-gradient(135deg, #fffdf0, #fff8e1);">
         <h3 style="border-bottom-color: #ffd700; color: #b8860b;">🏆 Finalize Event Results</h3>
-        <p style="color: #666; margin-bottom: 1rem;">Declare the winner and runner-up based on current total points. This will trigger confetti animations on the public pages.</p>
+        <p style="color: #666; margin-bottom: 1rem;">Declare the winner and runner-up based on current total points.
+          This will trigger confetti animations on the public pages.</p>
         <div id="finalizeMessage" class="message"></div>
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <button class="submit-btn" onclick="handleFinalizeResults()" style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #333; font-size: 1.1rem; flex: 1; min-width: 200px;">
+          <button class="submit-btn" onclick="handleFinalizeResults()"
+            style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #333; font-size: 1.1rem; flex: 1; min-width: 200px;">
             🏆 Finalize Results — Declare Winner & Runner-up
           </button>
-          <button class="submit-btn" onclick="handleResetResults()" style="background: #dc3545; flex: 0 0 auto; min-width: 150px;">
+          <button class="submit-btn" onclick="handleResetResults()"
+            style="background: #dc3545; flex: 0 0 auto; min-width: 150px;">
             🔄 Reset Results
           </button>
         </div>
@@ -530,22 +494,6 @@
         showAuthForm();
       }
     });
-
-    function toggleAuthForm() {
-      const loginForm = document.getElementById("loginForm");
-      const registerForm = document.getElementById("registerForm");
-      const authTitle = document.getElementById("authTitle");
-
-      if (loginForm.style.display === "none") {
-        loginForm.style.display = "block";
-        registerForm.style.display = "none";
-        authTitle.textContent = "Login";
-      } else {
-        loginForm.style.display = "none";
-        registerForm.style.display = "block";
-        authTitle.textContent = "Register";
-      }
-    }
 
     function showAuthForm() {
       document.getElementById("authSection").style.display = "block";
@@ -689,49 +637,10 @@
       }
     }
 
-    async function handleRegister() {
-      const name = document.getElementById("regName").value;
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
-
-      if (!name || !email || !password) {
-        showMessage("Please fill all fields", "error");
-        return;
-      }
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/auth/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          authToken = data.token;
-          localStorage.setItem("orgToken", authToken);
-          showMessage("Registration successful!", "success");
-          setTimeout(() => {
-            showDashboard();
-            loadClubs();
-            loadScoreLogs();
-            updateCategoryDropdown();
-          }, 500);
-        } else {
-          showMessage(data.message || "Registration failed", "error");
-        }
-      } catch (error) {
-        showMessage("Error: " + error.message, "error");
-      }
-    }
-
     function handleLogout() {
       authToken = null;
       localStorage.removeItem("orgToken");
       showAuthForm();
-      document.getElementById("loginForm").style.display = "block";
-      document.getElementById("registerForm").style.display = "none";
     }
 
     async function loadClubs() {

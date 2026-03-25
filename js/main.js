@@ -128,20 +128,6 @@ function renderHomeSponsors() {
     if (!sponsorsGrid) return;
     sponsorsGrid.innerHTML = '';
 
-    /* Disable sponsors rendering for now
-    sponsors.forEach(sponsor => {
-        const sponsorCard = document.createElement('div');
-        sponsorCard.className = 'sponsor-card';
-
-        sponsorCard.innerHTML = `
-            <div class="sponsor-category">${sponsor.category}</div>
-            <div class="sponsor-logo">${sponsor.logo}</div>
-            <div class="sponsor-name">${sponsor.name}</div>
-        `;
-
-        sponsorsGrid.appendChild(sponsorCard);
-    });
-    */
 }
 
 // Club border colors for the home section
