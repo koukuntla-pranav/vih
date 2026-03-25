@@ -331,9 +331,15 @@
           </div>
           <div class="form-group">
             <label for="scoreType">Score Type</label>
-            <select id="scoreType" onchange="updateEventDropdown()">
+            <select id="scoreType" onchange="updateCategoryDropdown()">
               <option value="sports">Sports Points</option>
               <option value="culture">Culture Points</option>
+            </select>
+          </div>
+          <div class="form-group" id="categoryGroup">
+            <label for="categorySelect">Select Category</label>
+            <select id="categorySelect" onchange="updateEventDropdown()">
+              <option value="">-- Choose Category --</option>
             </select>
           </div>
           <div class="form-group">
@@ -498,94 +504,20 @@
     </div>
   </footer>
 
+  <script src="../js/data.js"></script>
   <script>
     // Configuration
 
     // For development:
-    const API_BASE_URL = "https://vihang-woya.onrender.com/api";
+    // API_BASE_URL is already defined in data.js
 
-    const SPORTS_DATA = [
-      // Outdoor
-      { name: "Cricket", type: "Outdoor", genders: ["male", "female"] },
-      { name: "Football", type: "Outdoor", genders: ["male"] },
-      { name: "Kho-Kho", type: "Outdoor", genders: ["male", "female"] },
-      { name: "Throw Ball", type: "Outdoor", genders: ["female"] },
-      { name: "Basketball", type: "Outdoor", genders: ["male", "female"] },
-      { name: "Volleyball", type: "Outdoor", genders: ["male", "female"] },
-      { name: "Handball", type: "Outdoor", genders: ["male"] },
-      { name: "Box Cricket", type: "Outdoor", genders: ["neutral"] },
-      { name: "Tug of War", type: "Outdoor", genders: ["neutral"] },
-      { name: "Swimming", type: "Outdoor", genders: ["male", "female"] },
-      { name: "Vihang Letters", type: "Outdoor", genders: ["neutral"] },
-      { name: "Inaugural March Past", type: "Outdoor", genders: ["neutral"] },
-      // Indoor
-      {
-        name: "Badminton",
-        type: "Indoor",
-        genders: ["male", "female", "mixed"],
-      },
-      { name: "Table Tennis", type: "Indoor", genders: ["male", "female"] },
-      { name: "Carrom", type: "Indoor", genders: ["male", "female"] },
-      { name: "Chess", type: "Indoor", genders: ["male", "female"] },
-      { name: "Powerlifting", type: "Indoor", genders: ["male"] },
-      { name: "Yoga", type: "Indoor", genders: ["neutral"] },
-      // E-Sports
-      { name: "BGMI", type: "E-Sports", genders: ["neutral"] },
-      { name: "Valorant", type: "E-Sports", genders: ["neutral"] },
-      // Athletics
-      {
-        name: "Discus Throw",
-        type: "Athletics",
-        genders: ["male", "female"],
-      },
-      {
-        name: "Javelin Throw",
-        type: "Athletics",
-        genders: ["male", "female"],
-      },
-      { name: "Marathon", type: "Athletics", genders: ["male", "female"] },
-      { name: "Relay 4x100m", type: "Athletics", genders: ["male"] },
-      { name: "Shot Put", type: "Athletics", genders: ["male", "female"] },
-      {
-        name: "Slow Cycling",
-        type: "Athletics",
-        genders: ["male", "female"],
-      },
-      { name: "Sprint 100m", type: "Athletics", genders: ["male", "female"] },
-      { name: "Sprint 200m", type: "Athletics", genders: ["male", "female"] },
-      { name: "Triathlon Relay", type: "Athletics", genders: ["neutral"] },
-      { name: "Long Jump", type: "Athletics", genders: ["male"] },
-      { name: "Swimming 100m", type: "Athletics", genders: ["male"] },
-    ];
-    const SPORTS = SPORTS_DATA.map((s) => s.name);
-    const CULTURE_EVENTS = [
-      "Debate (English)",
-      "Debate (Hindi)",
-      "Poetry (English)",
-      "Poetry (Hindi)",
-      "Quiz",
-      "Pic of the Day",
-      "Reel of the Day",
-      "Meme of the Day",
-      "Pic of Vihang",
-      "Flash Mob",
-      "Face Painting",
-      "Short Film",
-      "Instrumental",
-      "Solo Dance",
-      "Duo Dance",
-      "Group Dance",
-      "Solo Singing",
-      "Duet Singing",
-      "Group Singing",
-      "Rangoli",
-      "Poster Making",
-      "Treasure Hunt",
-      "Vihang Letters",
-    ];
+    // Use data from data.js (sports & cultureEvents arrays)
+    const SPORTS_DATA = (typeof sports !== 'undefined') ? sports : [];
+    const SPORTS = SPORTS_DATA.map(s => s.name);
+    const CULTURE_EVENTS_DATA = (typeof cultureEvents !== 'undefined') ? cultureEvents : [];
 
     let authToken = localStorage.getItem("orgToken");
-    let clubs = [];
+    let dashClubs = [];
 
     // Initialize
     document.addEventListener("DOMContentLoaded", function () {
@@ -593,7 +525,7 @@
         showDashboard();
         loadClubs();
         loadScoreLogs();
-        updateEventDropdown(); // Initialize event dropdown
+        updateCategoryDropdown();
       } else {
         showAuthForm();
       }
@@ -625,13 +557,60 @@
       document.getElementById("dashboardSection").style.display = "block";
     }
 
+    function updateCategoryDropdown() {
+      const scoreType = document.getElementById("scoreType").value;
+      const categorySelect = document.getElementById("categorySelect");
+      const eventSelect = document.getElementById("eventSelect");
+      const genderGroup = document.getElementById("genderGroup");
+
+      // Reset event and gender dropdowns
+      eventSelect.innerHTML = '<option value="">-- Choose an event --</option>';
+      genderGroup.style.display = "none";
+
+      // Get unique categories
+      let categories = [];
+      if (scoreType === "sports") {
+        categories = [...new Set(SPORTS_DATA.map(s => s.type))];
+      } else {
+        categories = [...new Set(CULTURE_EVENTS_DATA.map(c => c.type))];
+      }
+
+      categorySelect.innerHTML = '<option value="">-- Choose Category --</option>';
+      categories.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        categorySelect.appendChild(option);
+      });
+    }
+
     function updateEventDropdown() {
       const scoreType = document.getElementById("scoreType").value;
+      const category = document.getElementById("categorySelect").value;
       const eventSelect = document.getElementById("eventSelect");
       const genderGroup = document.getElementById("genderGroup");
       const genderSelect = document.getElementById("genderSelect");
 
-      const events = scoreType === "sports" ? SPORTS : CULTURE_EVENTS;
+      if (!category) {
+        eventSelect.innerHTML = '<option value="">-- Choose an event --</option>';
+        return;
+      }
+
+      // Filter events by category
+      let events = [];
+      if (scoreType === "sports") {
+        events = SPORTS_DATA.filter(s => s.type === category);
+      } else {
+        events = CULTURE_EVENTS_DATA.filter(c => c.type === category);
+      }
+
+      eventSelect.innerHTML = '<option value="">-- Choose an event --</option>';
+      events.forEach((event) => {
+        const option = document.createElement("option");
+        option.value = event.name;
+        option.textContent = event.name;
+        eventSelect.appendChild(option);
+      });
 
       // Show gender box only for sports
       if (scoreType === "sports") {
@@ -639,15 +618,6 @@
       } else {
         genderGroup.style.display = "none";
       }
-
-      eventSelect.innerHTML =
-        '<option value="">-- Choose an event --</option>';
-      events.forEach((event) => {
-        const option = document.createElement("option");
-        option.value = event;
-        option.textContent = event;
-        eventSelect.appendChild(option);
-      });
 
       // Auto-select gender when sport changes
       eventSelect.onchange = function () {
@@ -658,9 +628,7 @@
         if (!selectedSport) return;
 
         const genders = selectedSport.genders;
-        // Reset gender options to only relevant ones
-        genderSelect.innerHTML =
-          '<option value="">-- Choose Gender --</option>';
+        genderSelect.innerHTML = '<option value="">-- Choose Gender --</option>';
         const genderLabels = {
           male: "Boys",
           female: "Girls",
@@ -711,7 +679,7 @@
             showDashboard();
             loadClubs();
             loadScoreLogs();
-            updateEventDropdown();
+            updateCategoryDropdown();
           }, 500);
         } else {
           showMessage(data.message || "Login failed", "error");
@@ -748,7 +716,7 @@
             showDashboard();
             loadClubs();
             loadScoreLogs();
-            updateEventDropdown();
+            updateCategoryDropdown();
           }, 500);
         } else {
           showMessage(data.message || "Registration failed", "error");
@@ -769,12 +737,12 @@
     async function loadClubs() {
       try {
         const response = await fetch(`${API_BASE_URL}/clubs`);
-        clubs = await response.json();
+        dashClubs = await response.json();
 
         const select = document.getElementById("clubSelect");
         select.innerHTML = '<option value="">-- Choose a club --</option>';
 
-        clubs.forEach((club) => {
+        dashClubs.forEach((club) => {
           const option = document.createElement("option");
           option.value = club._id;
           option.textContent = club.name;
