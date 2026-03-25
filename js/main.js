@@ -161,7 +161,7 @@ async function renderHomeClubs() {
 
     let logos = []; // Start empty
     try {
-        const response = await fetch('https://vihang-woya.onrender.com/api/images/club-home');
+        const response = await fetch(`${API_BASE_URL}/images/club-home`);
         if (response.ok) {
             const data = await response.json();
             if (data.length > 0) logos = data;
@@ -316,7 +316,7 @@ window.addEventListener('scroll', () => {
     // Fetch gallery images from API
     let images = [];
     try {
-        const res = await fetch('https://vihang-woya.onrender.com/api/images/gallery');
+        const res = await fetch(`${API_BASE_URL}/images/gallery`);
         images = await res.json();
     } catch (e) {
         // fallback: do nothing if fetch fails

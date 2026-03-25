@@ -3,7 +3,7 @@ let activeTeamTab = 'profs';
 
 document.addEventListener('DOMContentLoaded', async function () {
     try {
-        const response = await fetch('https://vihang-woya.onrender.com/api/images/teampage');
+        const response = await fetch(`${API_BASE_URL}/images/teampage`);
         if (!response.ok) throw new Error('Failed to fetch team data');
         fullTeamData = await response.json();
         

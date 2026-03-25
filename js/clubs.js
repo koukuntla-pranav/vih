@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Fetch logos
     let clubLogosData = [];
     try {
-        const res = await fetch('https://vihang-woya.onrender.com/api/images/club-logos');
+        const res = await fetch(`${API_BASE_URL}/images/club-logos`);
         if (res.ok) clubLogosData = await res.json();
     } catch (e) {
         console.error('Failed to fetch club logos', e);

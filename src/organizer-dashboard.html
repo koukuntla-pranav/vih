@@ -780,6 +780,7 @@
       }
 
       try {
+        console.log("📤 Sending:", endpoint, reqBody);
         const response = await fetch(endpoint, {
           method: "POST",
           headers: {
@@ -790,6 +791,7 @@
         });
 
         const data = await response.json();
+        console.log("📥 Response:", response.status, data);
 
         if (response.ok) {
           showMessage(
@@ -801,9 +803,10 @@
           document.getElementById("eventSelect").value = "";
           loadScoreLogs();
         } else {
-          showMessage(data.message || "Update failed", "error");
+          showMessage(data.message || data.error || "Update failed", "error");
         }
       } catch (error) {
+        console.error("❌ Fetch error:", error);
         showMessage("Error: " + error.message, "error");
       }
     }

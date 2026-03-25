@@ -1,4 +1,10 @@
-const API_BASE_URL = "https://vihang-woya.onrender.com/api";
+// Auto-detect API: use localhost when developing locally, Render when deployed
+const REMOTE_API = "https://vihang-woya.onrender.com/api";
+const LOCAL_API = "http://localhost:5000/api";  // backend PORT from .env
+const API_BASE_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+  ? LOCAL_API
+  : REMOTE_API;
+console.log("🔗 API:", API_BASE_URL);
 
 // Gradient colors for club capsules (edit these to change capsule colors)
 const clubGradients = {

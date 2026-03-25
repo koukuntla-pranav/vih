@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         let clubLogosData = [];
         let coordinatorsData = [];
         try {
-            const res = await fetch('https://vihang-woya.onrender.com/api/images/club-logos');
+            const res = await fetch(`${API_BASE_URL}/images/club-logos`);
             if (res.ok) clubLogosData = await res.json();
         } catch (e) {
             console.error('Failed to fetch club logos', e);
         }
         try {
-            const coordRes = await fetch('https://vihang-woya.onrender.com/api/images/coordinators');
+            const coordRes = await fetch(`${API_BASE_URL}/images/coordinators`);
             if (coordRes.ok) coordinatorsData = await coordRes.json();
         } catch (e) {
             console.error('Failed to fetch coordinators images', e);
