@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     renderLeaderboard();
     setupTabs();
     buildSportTypeDropdown();
-    populateCultureDropdown();
+    buildCultureTypeDropdown();
     buildGenderDropdown();
     setupEventListeners();
 });
@@ -69,7 +69,7 @@ function triggerWinnerConfetti() {
         return Math.random() * (max - min) + min;
     }
 
-    const intervalId = setInterval(function() {
+    const intervalId = setInterval(function () {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(intervalId);
 
@@ -165,6 +165,7 @@ function addDropdownOption(dropdown, value, label) {
 
 // Store dropdown references globally for dynamic updates
 let sportsDropdownRef = null;
+let cultureDropdownRef = null;
 let genderDropdownRef = null;
 
 function buildSportTypeDropdown() {
@@ -252,6 +253,8 @@ function updateGenderForSport(sport) {
     document.getElementById('sportsTableContainer').innerHTML = '<div class="placeholder">Please select gender to view standings</div>';
 }
 
+// populateCultureDropdown is deprecated in favor of buildCultureTypeDropdown
+/*
 function populateCultureDropdown() {
     const select = document.getElementById('cultureEventSelect');
     const dropdown = buildCustomDropdown(select, '-- Choose a Culture Event --');
@@ -265,6 +268,7 @@ function populateCultureDropdown() {
         addDropdownOption(dropdown, event.id, event.name);
     });
 }
+*/
 
 function buildGenderDropdown() {
     const select = document.getElementById('genderSelect');
@@ -279,6 +283,55 @@ function buildGenderDropdown() {
     });
 }
 
+function buildCultureTypeDropdown() {
+    const select = document.getElementById('cultureTypeSelect');
+    if (!select) return;
+    const dropdown = buildCustomDropdown(select, '-- Choose Type --');
+
+    ['Cultural', 'Literary', 'Inaugural'].forEach(type => {
+        addDropdownOption(dropdown, type, type);
+    });
+
+    // Also build the culture event dropdown (initially empty, filled on type select)
+    const cultureSelect = document.getElementById('cultureEventSelect');
+    cultureDropdownRef = buildCustomDropdown(cultureSelect, '-- Choose a Culture Event --');
+
+    // Hide culture selector until type is chosen
+    document.getElementById('cultureSelectorGroup').style.display = 'none';
+}
+
+function populateCultureForType(type) {
+    const select = document.getElementById('cultureEventSelect');
+    // Clear native select (keep placeholder)
+    select.innerHTML = '<option value="">-- Choose a Culture Event --</option>';
+
+    // Clear custom dropdown options
+    cultureDropdownRef._optionsList.innerHTML = '';
+    cultureDropdownRef._trigger.textContent = '-- Choose a Culture Event --';
+
+    // Reset gender
+    const genderSelect = document.getElementById('genderSelect');
+    genderSelect.value = '';
+    if (genderDropdownRef) {
+        genderDropdownRef._trigger.textContent = '-- Choose Gender --';
+        genderDropdownRef._optionsList.querySelectorAll('.custom-dropdown-option').forEach(o => o.classList.remove('selected'));
+    }
+    document.getElementById('genderSelectorGroup').style.display = 'none';
+    document.getElementById('cultureTableContainer').innerHTML = '<div class="placeholder">Select a event to view standings</div>';
+
+    // Filter culture events by type
+    const filtered = cultureEvents.filter(s => s.type === type);
+    filtered.forEach(event => {
+        const option = document.createElement('option');
+        option.value = event.id;
+        option.textContent = event.name;
+        select.appendChild(option);
+        addDropdownOption(cultureDropdownRef, event.id, event.name);
+    });
+
+    // Show sport selector
+    document.getElementById('cultureSelectorGroup').style.display = 'flex';
+}
 function setupEventListeners() {
     // Type of Sport selection
     document.getElementById('sportTypeSelect').addEventListener('change', function () {
@@ -306,6 +359,15 @@ function setupEventListeners() {
         const genderValue = this.value;
         if (sportId && genderValue) {
             displaySportStandings(sportId, genderValue);
+        }
+    });
+    document.getElementById('cultureTypeSelect').addEventListener('change', function () {
+        const type = this.value;
+        if (type) {
+            populateCultureForType(type);
+        } else {
+            document.getElementById('cultureSelectorGroup').style.display = 'none';
+            document.getElementById('cultureTableContainer').innerHTML = '<div class="placeholder">Select a type and culture to view standings</div>';
         }
     });
 

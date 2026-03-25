@@ -119,29 +119,6 @@ async function fetchClubsData() {
   return [];
 }
 
-const sponsors = [
-  {
-    id: 1,
-    name: "Sponsor Name",
-    logo: "👑",
-    category: "Title Sponsor",
-    description: "Main sponsor for Vihaang",
-  },
-  {
-    id: 2,
-    name: "Sponsor Name",
-    logo: "🌟",
-    category: "Co-title Sponsor",
-    description: "Co-title sponsor for Vihaang",
-  },
-  {
-    id: 3,
-    name: "Sponsor Name",
-    logo: "⚡",
-    category: "Equipment Sponsor",
-    description: "Equipment sponsor for Vihaang events",
-  },
-];
 
 const sports = [
   // Outdoor
@@ -196,56 +173,49 @@ const sports = [
     type: "Outdoor",
     genders: ["male", "female"],
   },
-  {
-    id: 10,
-    name: "Inaugural March Past",
-    icon: "🚶",
-    type: "Outdoor",
-    genders: ["neutral"],
-  },
 
   // Indoor
   {
-    id: 11,
+    id: 10,
     name: "Badminton",
     icon: "🏸",
     type: "Indoor",
     genders: ["male", "female", "mixed"],
   },
   {
-    id: 12,
+    id: 11,
     name: "Table Tennis",
     icon: "🏓",
     type: "Indoor",
     genders: ["male", "female"],
   },
   {
-    id: 13,
+    id: 12,
     name: "Carrom",
     icon: "🎯",
     type: "Indoor",
     genders: ["male", "female"],
   },
   {
-    id: 14,
+    id: 13,
     name: "Chess",
     icon: "♟️",
     type: "Indoor",
     genders: ["male", "female"],
   },
   {
-    id: 15,
+    id: 14,
     name: "Powerlifting",
     icon: "🏋️",
     type: "Indoor",
     genders: ["male"],
   },
-  { id: 16, name: "Yoga", icon: "🧘", type: "Indoor", genders: ["neutral"] },
+  { id: 15, name: "Yoga", icon: "🧘", type: "Indoor", genders: ["neutral"] },
 
   // E-Sports
-  { id: 17, name: "BGMI", icon: "📱", type: "E-Sports", genders: ["neutral"] },
+  { id: 16, name: "BGMI", icon: "📱", type: "E-Sports", genders: ["neutral"] },
   {
-    id: 18,
+    id: 17,
     name: "Valorant",
     icon: "💻",
     type: "E-Sports",
@@ -254,114 +224,124 @@ const sports = [
 
   // Athletics
   {
-    id: 21,
+    id: 18,
     name: "Discus Throw",
     icon: "🥏",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 22,
+    id: 19,
     name: "Javelin Throw",
     icon: "🏹",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 23,
+    id: 20,
     name: "Marathon",
     icon: "🏃",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 24,
+    id: 21,
     name: "Relay 4x100m",
     icon: "🏃‍♂️",
     type: "Athletics",
     genders: ["male"],
   },
   {
-    id: 25,
+    id: 22,
     name: "Shot Put",
     icon: "⚫",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 26,
+    id: 23,
     name: "Slow Cycling",
     icon: "🚴",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 27,
+    id: 24,
     name: "Sprint 100m",
     icon: "🏃",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 28,
+    id: 25,
     name: "Sprint 200m",
     icon: "🏃",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 29,
+    id: 26,
     name: "Triathlon Relay",
     icon: "🏃",
     type: "Athletics",
     genders: ["neutral"],
   },
   {
-    id: 30,
+    id: 27,
     name: "Long Jump",
     icon: "🦘",
     type: "Athletics",
+    genders: ["male", "female"],
+  },
+  {
+    id: 28,
+    name: "Swimming 100m",
+    icon: "🏊",
+    type: "Indoor",
     genders: ["male"],
   },
   {
-    id: 31,
-    name: "Swimming 100m",
+    id: 29,
+    name: "Swimming 50m",
     icon: "🏊",
-    type: "Athletics",
-    genders: ["male"],
+    type: "Indoor",
+    genders: ["female"],
   },
 ];
 
 const cultureEvents = [
-  { id: 1, name: "Debate (English)" },
-  { id: 2, name: "Debate (Hindi)" },
-  { id: 3, name: "Poetry (English)" },
-  { id: 4, name: "Poetry (Hindi)" },
-  { id: 5, name: "Quiz" },
-  { id: 6, name: "Pic of the Day" },
-  { id: 7, name: "Reel of the Day" },
-  { id: 8, name: "Meme of the Day" },
-  { id: 9, name: "Pic of Vihang" },
-  { id: 10, name: "Flash Mob" },
-  { id: 11, name: "Face Painting" },
-  { id: 12, name: "Short Film" },
-  { id: 13, name: "Instrumental" },
-  { id: 14, name: "Solo Dance" },
-  { id: 15, name: "Duo Dance" },
-  { id: 16, name: "Group Dance" },
-  { id: 17, name: "Solo Singing" },
-  { id: 18, name: "Duet Singing" },
-  { id: 19, name: "Group Singing" },
-  { id: 20, name: "Rangoli" },
-  { id: 21, name: "Poster Making" },
-  { id: 22, name: "Treasure Hunt" },
-  { id: 23, name: "Vihang Letters" },
+  { id: 1, name: "Debate (English)", type: "Literary" },
+  { id: 2, name: "Debate (Hindi)", type: "Literary" },
+  { id: 3, name: "Poetry (English)", type: "Literary" },
+  { id: 4, name: "Poetry (Hindi)", type: "Literary" },
+  { id: 5, name: "Quiz", type: "Literary" },
+  { id: 6, name: "Pic of the Day", type: "Cultural" },
+  { id: 7, name: "Reel of the Day", type: "Cultural" },
+  { id: 8, name: "Meme of the Day", type: "Cultural" },
+  { id: 9, name: "Pic of Vihang", type: "Cultural" },
+  { id: 10, name: "Flash Mob", type: "Cultural" },
+  { id: 11, name: "Face Painting", type: "Cultural" },
+  { id: 12, name: "Short Film", type: "Cultural" },
+  { id: 13, name: "Instrumental", type: "Cultural" },
+  { id: 14, name: "Solo Dance", type: "Cultural" },
+  { id: 15, name: "Duo Dance", type: "Cultural" },
+  { id: 16, name: "Group Dance", type: "Cultural" },
+  { id: 17, name: "Solo Singing", type: "Cultural" },
+  { id: 18, name: "Duet Singing", type: "Cultural" },
+  { id: 19, name: "Group Singing", type: "Cultural" },
+  { id: 20, name: "Rangoli", type: "Cultural" },
+  { id: 21, name: "Poster Making", type: "Cultural" },
+  { id: 22, name: "Treasure Hunt", type: "Cultural" },
+  { id: 23, name: "Crowd(Enthusiasm)", type: "Cultural" },
+  { id: 24, name: "Crowd(Enthusiasm)", type: "Literary" },
+  { id: 25, name: "Inagural march past", type: "Inaugural" },
+  { id: 26, name: "Vihang Letters", type: "Inaugural" }
 ];
 
 // ============================================
 // PAGE LOADER — fade out once page is fully loaded
 // ============================================
-(function() {
+(function () {
   const loaderStart = Date.now();
   const MIN_DISPLAY_MS = 1250; // minimum loader display time (half circle of 2.5s spin)
 
