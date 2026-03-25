@@ -1,10 +1,28 @@
 // Auto-detect API: use localhost when developing locally, Render when deployed
 const REMOTE_API = "https://vihang-woya.onrender.com/api";
 const LOCAL_API = "http://localhost:5000/api";  // backend PORT from .env
-const API_BASE_URL = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
-  ? LOCAL_API
-  : REMOTE_API;
-console.log("🔗 API:", API_BASE_URL);
+
+// Global variable for other scripts to use
+let API_BASE_URL = REMOTE_API; // default fallback
+
+// Global promise that other scripts MUST await before using API_BASE_URL
+const apiReadyPromise = (async function getWorkingAPI() {
+  try {
+    // Try a quick health check on local API
+    const res = await fetch(`${LOCAL_API}/health`, { method: "GET", timeout: 1000 });
+
+    if (res.ok) {
+      console.log("Using LOCAL API");
+      API_BASE_URL = LOCAL_API;
+      return;
+    }
+  } catch (err) {
+    console.warn("Local API timeout or not available, switching to remote...");
+  }
+
+  console.log("Using REMOTE API");
+  API_BASE_URL = REMOTE_API;
+})();
 
 // Gradient colors for club capsules (edit these to change capsule colors)
 const clubGradients = {
@@ -25,6 +43,7 @@ let clubs = [];
 
 // Function to fetch clubs data from backend
 async function fetchClubsData() {
+  await apiReadyPromise;
   try {
     const response = await fetch(`${API_BASE_URL}/clubs`);
     if (response.ok) {

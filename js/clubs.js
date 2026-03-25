@@ -1,6 +1,7 @@
 // Script for clubs.html - Clubs Page
 
 document.addEventListener('DOMContentLoaded', async function () {
+    await apiReadyPromise;
     await fetchClubsData();
     
     // Fetch logos

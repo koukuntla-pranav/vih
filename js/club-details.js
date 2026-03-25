@@ -1,6 +1,7 @@
 // Script for club-details.html
 
 document.addEventListener('DOMContentLoaded', async function () {
+    await apiReadyPromise;
     await fetchClubsData();
     const clubId = sessionStorage.getItem('selectedClubId');
     if (clubId) {

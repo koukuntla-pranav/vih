@@ -159,6 +159,7 @@ async function renderHomeClubs() {
     const grid = document.getElementById('homeClubsGrid');
     if (!grid) return;
 
+    await apiReadyPromise;
     let logos = []; // Start empty
     try {
         const response = await fetch(`${API_BASE_URL}/images/club-home`);
@@ -314,6 +315,7 @@ window.addEventListener('scroll', () => {
     if (!carousel) return;
 
     // Fetch gallery images from API
+    await apiReadyPromise;
     let images = [];
     try {
         const res = await fetch(`${API_BASE_URL}/images/gallery`);

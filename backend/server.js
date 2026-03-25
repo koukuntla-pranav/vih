@@ -475,6 +475,11 @@ app.post('/api/init-clubs', async (req, res) => {
 });
 */
 
+// Health Check Endpoint
+app.get("/api/health", (req, res) => {
+  res.json({ message: "OK" });
+});
+
 // Fallback for frontend routing (if any)
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../index.html"));

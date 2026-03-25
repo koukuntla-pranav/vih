@@ -2,6 +2,7 @@ let fullTeamData = [];
 let activeTeamTab = 'profs';
 
 document.addEventListener('DOMContentLoaded', async function () {
+    await apiReadyPromise;
     try {
         const response = await fetch(`${API_BASE_URL}/images/teampage`);
         if (!response.ok) throw new Error('Failed to fetch team data');
