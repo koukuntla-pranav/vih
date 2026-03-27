@@ -302,7 +302,7 @@ const sports = [
     name: "Sprint 200m",
     icon: "🏃",
     type: "Athletics",
-    genders: ["male", "female"],
+    genders: ["male"],
   },
   {
     id: 26,
