@@ -191,13 +191,7 @@ const sports = [
     type: "Outdoor",
     genders: ["neutral"],
   },
-  {
-    id: 9,
-    name: "Swimming",
-    icon: "🏊",
-    type: "Outdoor",
-    genders: ["male", "female"],
-  },
+
 
   // Indoor
   {

@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', async function () {
     await apiReadyPromise;
     await fetchClubsData();
-    
+
     // Fetch logos
     let clubLogosData = [];
     try {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (e) {
         console.error('Failed to fetch club logos', e);
     }
-    
+
     renderClubs(clubLogosData);
     renderClubLeaderboard();
 
@@ -58,7 +58,7 @@ function renderClubs(clubLogosData = []) {
         // Find logo from data fetched
         const logoData = clubLogosData.find(l => l.name.toLowerCase() === club.name.toLowerCase());
         const logoUrl = logoData ? logoData.image_url : null;
-        
+
         const swiperSlide = document.createElement('div');
         swiperSlide.className = 'swiper-slide';
 
@@ -68,7 +68,7 @@ function renderClubs(clubLogosData = []) {
         clubCard.style.backgroundColor = club.backgroundColor;
         clubCard.onclick = () => goToClubDetails(club.id);
 
-        let imageHtml = logoUrl 
+        let imageHtml = logoUrl
             ? `<div class="club-image"><img src="${logoUrl}" alt="${club.name} logo" style=" margin-top: 25px; margin-bottom: -10px; width:300px; height:125px; object-fit:contain;"></div>`
             : `<div class="club-image">${club.element}</div>`;
 
@@ -139,7 +139,7 @@ function renderClubLeaderboard() {
     let headerHTML = `
         <thead>
             <tr>
-                <th>Rank</th>
+                <th>S.No</th>
                 <th colspan="2">Club</th>
                 <th>Sports Pts</th>
                 <th>Culture Pts</th>
@@ -185,7 +185,7 @@ function triggerWinnerConfetti() {
         return Math.random() * (max - min) + min;
     }
 
-    const intervalId = setInterval(function() {
+    const intervalId = setInterval(function () {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(intervalId);
 

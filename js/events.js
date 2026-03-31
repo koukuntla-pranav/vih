@@ -23,7 +23,7 @@ function renderLeaderboard() {
     let headerHTML = `
         <thead>
             <tr>
-                <th>Rank</th>
+                <th>S.No</th>
                 <th colspan="2">Club</th>
                 <th>Sports Pts</th>
                 <th>Culture Pts</th>
@@ -395,7 +395,7 @@ function displaySportStandings(sportId, gender) {
 
     const genderLabel = gender.charAt(0).toUpperCase() + gender.slice(1);
     const title = document.createElement('h3');
-    title.textContent = `${sport.name} - ${genderLabel} - Standings`;
+    title.textContent = `${sport.name} - ${genderLabel} `;
     container.appendChild(title);
 
     const table = document.createElement('table');
@@ -404,7 +404,7 @@ function displaySportStandings(sportId, gender) {
     let html = `
         <thead>
             <tr>
-                <th>Rank</th>
+                <th>S.No</th>
                 <th colspan="2">Club</th>
                 <th>Total Points</th>
             </tr>
@@ -441,7 +441,7 @@ function displayCultureStandings(eventId) {
     let html = `
         <thead>
             <tr>
-                <th>Rank</th>
+                <th>S.No</th>
                 <th colspan="2">Club</th>
                 <th>Points</th>
             </tr>
