@@ -4,9 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clubs - Vihang</title>
+  <title>Gallery - Vihang</title>
   <link rel="icon" type="image/svg+xml" href="../V logo.svg" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
   <link rel="stylesheet" href="../css/style.css" />
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
@@ -28,11 +27,10 @@
 
       <ul class="nav-links">
         <li><a href="../index.html">Home</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="clubs.html" class="active">Clubs</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="clubs.html">Clubs</a></li>
         <li><a href="leadboard.html">LeadBoard</a></li>
         <li><a href="team.html">Team </a></li>
-        <!-- <li><a href="sponsors.html">Sponsors</a></li> -->
         <li class="mobile-login">
           <a href="organizer-dashboard.html">Login</a>
         </li>
@@ -44,36 +42,52 @@
     </div>
   </nav>
 
-  <!--  
-    <section class="hero-section-clubs">
-        <div class="container">
-            <h1>Our Clubs 5 elements of Nature</h1>
-            <p>Where elements meet </p>
-        </div>
-    </section>-->
-
-  <!-- Clubs Section -->
-  <section class="clubs-section">
+  <!-- Title Section -->
+  <section class="gallery-page-header">
     <div class="container">
-      <h2>Meet the Five Clubs</h2>
-      <div class="swiper mySwiper">
-        <div class="swiper-wrapper" id="clubsGrid">
-          <!-- Clubs will be populated by JavaScript -->
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
+      <h1>Vihang 2k26</h1>
+      <p class="section-subtitle">Power of the forces, Spirit of the field</p>
     </div>
   </section>
 
-  <!-- Club Statistics -->
-  <section class="club-stats-section">
-    <div class="container">
-      <h2>Club Rankings</h2>
-      <div class="leaderboard" id="clubLeaderboard">
-        <!-- Leaderboard will be populated by JavaScript -->
+  <!-- Gallery Main Section -->
+  <section class="gallery-page-content">
+    <div class="container gallery-container">
+      
+      <!-- Primary Tabs -->
+      <div class="gallery-primary-tabs" id="galleryPrimaryTabs">
+        <button class="gallery-tab-btn active" data-tab="all">All</button>
+        <button class="gallery-tab-btn" data-tab="Sports">Sports</button>
+        <button class="gallery-tab-btn" data-tab="Cultural">Cultural</button>
+        <button class="gallery-tab-btn" data-tab="Athletics">Athletics</button>
+        <button class="gallery-tab-btn" data-tab="Clubs">Clubs</button>
       </div>
+
+      <!-- Secondary Filters Row (Dynamically populated via JS) -->
+      <div class="gallery-secondary-filters" id="gallerySecondaryFilters" style="display: none;">
+         <!-- Pill buttons injected here -->
+      </div>
+
+      <!-- Image Grid -->
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Images injected here by JS -->
+      </div>
+
+      <!-- No Results Message -->
+      <div id="galleryNoResults" class="gallery-no-results" style="display: none;">
+         <p>No photos available for this category yet.</p>
+      </div>
+
     </div>
   </section>
+
+  <!-- Lightbox Modal for Full View -->
+  <div class="gallery-lightbox" id="galleryLightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Full view">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+  </div>
+
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-top">
@@ -162,16 +176,11 @@
 
       <div class="footer-bottom">
         <p>&copy; 2026 <strong>Vihang</strong>. All rights reserved.</p>
-        <!--  <p>Developed and designed by Pranav and Nikhil</p>-->
-
       </div>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="../js/data.js"></script>
-  <script src="../js/clubs.js"></script>
+  <script src="../js/gallery.js"></script>
 </body>
-
 </html>
