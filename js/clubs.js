@@ -139,7 +139,7 @@ function renderClubLeaderboard() {
     let headerHTML = `
         <thead>
             <tr>
-                <th>S.No</th>
+                <th>Rank</th>
                 <th colspan="2">Club</th>
                 <th>Sports Pts</th>
                 <th>Culture Pts</th>
