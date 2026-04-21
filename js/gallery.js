@@ -3,22 +3,34 @@
 document.addEventListener("DOMContentLoaded", async () => {
     // We can await Clubs data if we need dynamic clubs
     await fetchClubsData();
+    await fetchGalleryData();
     initGallery();
 });
 
-// Mock Data for Gallery
-const mockPhotos = [
-    { id: 1, src: "https://placehold.co/600x400/2c2083/FFF?text=Cricket+Match", title: "Cricket Finals", mainTab: "Sports", subTab: "Outdoor", club: "Ether Rox" },
-    { id: 2, src: "https://placehold.co/600x600/2002b7/FFF?text=Badminton", title: "Badminton Singles", mainTab: "Sports", subTab: "Indoor", club: "Hydro Heroes" },
-    { id: 3, src: "https://placehold.co/400x600/814402/FFF?text=Relay+Race", title: "4x100 Relay", mainTab: "Sports", subTab: "Athletics", club: "Gravitas Elites" },
-    { id: 4, src: "https://placehold.co/600x400/f42a2a/FFF?text=BGMI+Tournament", title: "BGMI Finals", mainTab: "Sports", subTab: "E-Sports", club: "FireStorm" },
-    { id: 5, src: "https://placehold.co/800x600/6e9fb6/FFF?text=Flash+Mob", title: "Opening Flash Mob", mainTab: "Cultural", subTab: "Cultural", club: "Aero Knights" },
-    { id: 6, src: "https://placehold.co/600x600/2c2083/FFF?text=Debate", title: "English Debate", mainTab: "Cultural", subTab: "Literary", club: "Ether Rox" },
-    { id: 7, src: "https://placehold.co/500x700/2002b7/FFF?text=March+Past", title: "Inaugural March Past", mainTab: "Cultural", subTab: "Inaugural", club: "Hydro Heroes" },
-    { id: 8, src: "https://placehold.co/600x400/814402/FFF?text=Football", title: "Football Semi-Finals", mainTab: "Sports", subTab: "Outdoor", club: "Gravitas Elites" },
-    { id: 9, src: "https://placehold.co/400x400/f42a2a/FFF?text=Chess", title: "Chess Tournament", mainTab: "Sports", subTab: "Indoor", club: "FireStorm" },
-    { id: 10, src: "https://placehold.co/600x800/6e9fb6/FFF?text=Singing", title: "Solo Singing Performance", mainTab: "Cultural", subTab: "Cultural", club: "Aero Knights" },
-];
+let galleryPhotos = [];
+
+async function fetchGalleryData() {
+    await apiReadyPromise; // From data.js
+    try {
+        const response = await fetch(`${API_BASE_URL}/gallery`);
+        if (response.ok) {
+            const data = await response.json();
+            // Map the DB fields (img_url, cat, sub cat, club) to our internal structure
+            galleryPhotos = data.map((item, index) => ({
+                id: item._id || index,
+                src: item.img_url,
+                title: item.title || `${item.cat} Photo`,
+                mainTab: item.cat,
+                subTab: item['sub cat'] || item.sub_cat || item.subcat || item.subCat || '',
+                club: item.club || ''
+            }));
+        } else {
+            console.error("Failed to fetch gallery data");
+        }
+    } catch (error) {
+        console.error("Error fetching gallery data:", error);
+    }
+}
 
 function initGallery() {
     const primaryTabs = document.querySelectorAll('.gallery-tab-btn');
@@ -43,16 +55,14 @@ function initGallery() {
     const subTabMap = {
         'Sports': ['All', 'Outdoor', 'Indoor', 'Athletics', 'E-Sports'],
         'Cultural': ['All', 'Cultural', 'Literary', 'Inaugural'],
-        'Clubs': ['All', ...clubs.map(c => c.name)]
+        'Clubs': ['All', 'Ether Rox', 'Gravitas Elites', 'Hydro Heroes', 'FireStorm', 'Aero Knights']
     };
 
     function renderSecondaryFilters(mainTab) {
         secondaryContainer.innerHTML = '';
         currentSubTab = 'All'; // Reset sub tab on main tab change
 
-        if (mainTab === 'all' || mainTab === 'Athletics') {
-            // Athletics is kept as a primary tab in HTML currently but might act like 'all' if we don't have sub tabs for it.
-            // But if user meant Athletics is just a subtab in Sports, we'll handle it.
+        if (mainTab === 'all') {
             secondaryContainer.style.display = 'none';
         } else {
             const subTabs = subTabMap[mainTab];
@@ -79,16 +89,13 @@ function initGallery() {
 
     function renderGallery() {
         gridContainer.innerHTML = '';
-        let filteredImages = mockPhotos;
+        let filteredImages = galleryPhotos;
 
         // Filter by Primary Tab
         if (currentMainTab !== 'all') {
             if (currentMainTab === 'Clubs') {
                 // If main tab is clubs, we don't filter out by mainTab field. 
                 // We just rely on the sub-tab filter. Wait, if sub-tab is 'All' under Clubs, we show all images.
-            } else if (currentMainTab === 'Athletics') {
-                // If they click Athletics as a primary tab
-                filteredImages = filteredImages.filter(img => img.subTab === 'Athletics');
             } else {
                 filteredImages = filteredImages.filter(img => img.mainTab === currentMainTab);
             }
@@ -98,7 +105,7 @@ function initGallery() {
         if (currentSubTab !== 'All' && currentMainTab !== 'all') {
             if (currentMainTab === 'Clubs') {
                 filteredImages = filteredImages.filter(img => img.club === currentSubTab);
-            } else if (currentMainTab !== 'Athletics') {
+            } else {
                 filteredImages = filteredImages.filter(img => img.subTab === currentSubTab);
             }
         }
