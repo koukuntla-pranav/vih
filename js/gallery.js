@@ -37,7 +37,7 @@ function initGallery() {
     const secondaryContainer = document.getElementById('gallerySecondaryFilters');
     const gridContainer = document.getElementById('galleryGrid');
     const noResults = document.getElementById('galleryNoResults');
-    
+
     // Lightbox elements
     const lightbox = document.getElementById("galleryLightbox");
     const lightboxImg = document.getElementById("lightboxImg");
@@ -127,7 +127,7 @@ function initGallery() {
                 img.loading = "lazy";
 
                 imgWrap.appendChild(img);
-                
+
                 // Add click listener for Lightbox
                 imgWrap.addEventListener("click", () => {
                     lightbox.style.display = "flex";

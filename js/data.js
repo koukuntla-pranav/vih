@@ -65,6 +65,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "👩‍💼",
           instagramLink:
             "https://www.instagram.com/ether_rox?igsh=MWFqMnVqbzhyYTA2bw==",
+          flashMobVideo: "https://www.youtube.com/embed/e7aCgK_P2ZA?si=uGK92yivHLYbMmvI",
         },
         "Gravitas Elites": {
           element: `<img src="../images/clubs_logos/club2_logo.PNG" alt="Gravitas Elites" class="club-logo">`,
@@ -80,6 +81,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "👩‍💼",
           instagramLink:
             "https://www.instagram.com/gravitaselites?igsh=MWFnbnI1bXYyZGZkdQ==",
+          flashMobVideo: "https://www.youtube.com/embed/OM4gu1iwaG8?si=Sk1ugfvt7ArUNsBg",
         },
 
         "Hydro Heroes": {
@@ -96,6 +98,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "../club-3-images/Club3VC.jpg",
           instagramLink:
             "https://www.instagram.com/hydro__heroes?igsh=MWpuamV2cGtlNXV0ZQ==",
+          flashMobVideo: "https://www.youtube.com/embed/RxQWujoYbFQ?si=fUGrWaWP_8HDFcKr",
         },
         FireStorm: {
           element: `<img src="../images/clubs_logos/club4_logo.png" alt="Firestorm" class="club-logo">`,
@@ -111,6 +114,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "👩‍💼",
           instagramLink:
             "https://www.instagram.com/firestorm_vihang26?igsh=MTBkMGQ3b3hjMGJkaw==",
+          flashMobVideo: "https://www.youtube.com/embed/G-tgz4cF2Dw?si=4kXo37DHCXYXBe7B",
         },
 
         "Aero Knights": {
@@ -127,6 +131,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "👩‍💼",
           instagramLink:
             "https://www.instagram.com/aeroknights__vihang26?igsh=N2Vqam1rcDBobzdk",
+          flashMobVideo: "https://www.youtube.com/embed/n1g1xDYjYGg?si=r93NObHB6SOi6vAN",
         },
       };
 
@@ -265,62 +270,35 @@ const sports = [
   },
   {
     id: 21,
-    name: "Relay 4x100m",
-    icon: "🏃‍♂️",
-    type: "Athletics",
-    genders: ["male"],
-  },
-  {
-    id: 22,
     name: "Shot Put",
     icon: "⚫",
     type: "Athletics",
     genders: ["male", "female"],
   },
+
   {
-    id: 23,
-    name: "Slow Cycling",
-    icon: "🚴",
-    type: "Athletics",
-    genders: ["male", "female"],
-  },
-  {
-    id: 24,
+    id: 22,
     name: "Sprint 100m",
     icon: "🏃",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 25,
-    name: "Sprint 200m",
-    icon: "🏃",
-    type: "Athletics",
-    genders: ["male"],
-  },
-  {
-    id: 26,
-    name: "Triathlon Relay",
-    icon: "🏃",
-    type: "Athletics",
-    genders: ["neutral"],
-  },
-  {
-    id: 27,
+    id: 23,
     name: "Long Jump",
     icon: "🦘",
     type: "Athletics",
     genders: ["male", "female"],
   },
   {
-    id: 28,
+    id: 24,
     name: "Swimming 100m",
     icon: "🏊",
     type: "Indoor",
     genders: ["male"],
   },
   {
-    id: 29,
+    id: 25,
     name: "Swimming 50m",
     icon: "🏊",
     type: "Indoor",
@@ -351,10 +329,9 @@ const cultureEvents = [
   { id: 20, name: "Rangoli", type: "Cultural" },
   { id: 21, name: "Poster Making", type: "Cultural" },
   { id: 22, name: "Treasure Hunt", type: "Cultural" },
-  { id: 23, name: "Crowd(Enthusiasm)", type: "Cultural" },
-  { id: 24, name: "Crowd(Enthusiasm)", type: "Literary" },
-  { id: 25, name: "Inagural march past", type: "Inaugural" },
-  { id: 26, name: "Vihang Letters", type: "Inaugural" }
+  { id: 23, name: "Crowd(Enthusiasm)", type: "Literary" },
+  { id: 24, name: "Inagural march past", type: "Inaugural" },
+  { id: 25, name: "Vihang Letters", type: "Inaugural" }
 ];
 
 // ============================================

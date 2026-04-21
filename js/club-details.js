@@ -71,6 +71,7 @@ function displayClubDetails(clubId, clubLogosData = [], coordinatorsData = []) {
                     </div>` : ''}
                 </div>
             </div>
+            </div>
         </div>
     `;
 
@@ -82,7 +83,31 @@ function displayClubDetails(clubId, clubLogosData = [], coordinatorsData = []) {
     document.getElementById('sportsPoints').textContent = club.sportsPoints;
     document.getElementById('culturePoints').textContent = club.culturePoints;
 
-    document.title = `${club.name} - Vihaang`;
+    // Render Flash Mob
+    const flashMobContainer = document.getElementById('clubFlashMobContainer');
+    if (flashMobContainer) {
+        if (club.flashMobVideo) {
+            flashMobContainer.innerHTML = `
+            <div class="club-flashmob" style="margin-top: 30px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div style="padding: 15px; background: ${club.color}; color: white; text-align: center;">
+                    <h3 style="margin: 0; font-family: 'Outfit', sans-serif;">Flash Mob Performance</h3>
+                </div>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; background: #000;">
+                    <iframe src="${club.flashMobVideo}" 
+                            title="${club.name} Flash Mob" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            `;
+        } else {
+            flashMobContainer.innerHTML = '';
+        }
+    }
+
+    document.title = `${club.name} - Vihang`;
 }
 
 function renderTeamMembers(club, coordinatorsData = []) {

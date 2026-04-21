@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;800&family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
     rel="stylesheet" />
@@ -262,6 +263,22 @@
     </div>
   </section>
 
+  <!-- Home Flash Mobs Section -->
+  <section class="home-flashmobs-section" style="padding: 4rem 0; background-color: var(--bg-color);">
+    <div class="container">
+      <h2 style="text-align: center;">Club Flash Mobs</h2>
+      <p class="section-intro" style="text-align: center;">Experience the energy of each element</p>
+      <div class="swiper flashMobSwiper" style="padding-bottom: 3rem; margin-top: 2rem;">
+        <div class="swiper-wrapper" id="homeFlashMobsGrid">
+          <!-- Flash Mobs will be populated by JavaScript -->
+        </div>
+        <div class="swiper-pagination flashmob-pagination"></div>
+        <div class="swiper-button-next flashmob-next" style="color: #6c5ce7;"></div>
+        <div class="swiper-button-prev flashmob-prev" style="color: #6c5ce7;"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- Gallery Section -->
   <section class="gallery-section">
     <div class="container">
@@ -470,6 +487,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
 </body>

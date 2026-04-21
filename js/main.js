@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     renderAboutSection();
     renderHomeSponsors();
     renderHomeClubs();
+    renderHomeFlashMobs();
 });
 
 function renderLeaderboard() {
@@ -176,6 +177,76 @@ async function renderHomeClubs() {
         `;
         grid.appendChild(item);
     });
+}
+
+function renderHomeFlashMobs() {
+    const flashMobsGrid = document.getElementById('homeFlashMobsGrid');
+    if (!flashMobsGrid) return;
+    flashMobsGrid.innerHTML = '';
+
+    const clubOrder = ['Ether Rox', 'Gravitas Elites', 'Hydro Heroes', 'FireStorm', 'Aero Knights'];
+    const orderedClubs = [...clubs].sort((a,b) => clubOrder.indexOf(a.name) - clubOrder.indexOf(b.name));
+
+    orderedClubs.forEach(club => {
+        if (club.flashMobVideo) {
+            const swiperSlide = document.createElement('div');
+            swiperSlide.className = 'swiper-slide';
+            swiperSlide.style.display = 'flex';
+            swiperSlide.style.justifyContent = 'center';
+
+            const videoContainer = document.createElement('div');
+            videoContainer.className = 'flashmob-video-container';
+            videoContainer.style.width = '100%';
+            videoContainer.style.maxWidth = '800px';
+            videoContainer.style.background = '#000';
+            videoContainer.style.borderRadius = '15px';
+            videoContainer.style.overflow = 'hidden';
+            videoContainer.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+            
+            videoContainer.innerHTML = `
+                <div style="padding: 15px; background: ${club.backgroundColor || '#fff'}; border-bottom: 2px solid ${club.color || '#ccc'};">
+                    <h3 style="margin: 0; text-align: center; color: ${club.color || '#333'}; font-family: 'Outfit', sans-serif;">${club.name} Flash Mob</h3>
+                </div>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+                    <iframe src="${club.flashMobVideo}" 
+                            title="${club.name} Flash Mob" 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            `;
+            
+            swiperSlide.appendChild(videoContainer);
+            flashMobsGrid.appendChild(swiperSlide);
+        }
+    });
+
+    if (document.querySelectorAll('.flashMobSwiper .swiper-slide').length > 0) {
+        new Swiper(".flashMobSwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: ".flashmob-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".flashmob-next",
+                prevEl: ".flashmob-prev",
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 1.2,
+                    centeredSlides: true,
+                },
+                1024: {
+                    slidesPerView: 1.5,
+                    centeredSlides: true,
+                }
+            }
+        });
+    }
 }
 
 function startCountdown() {
