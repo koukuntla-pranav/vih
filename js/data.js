@@ -81,7 +81,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "👩‍💼",
           instagramLink:
             "https://www.instagram.com/gravitaselites?igsh=MWFnbnI1bXYyZGZkdQ==",
-          flashMobVideo: "https://www.youtube.com/embed/OM4gu1iwaG8?si=Sk1ugfvt7ArUNsBg",
+          flashMobVideo: "https://www.youtube.com/embed/8VJVTTfw9c0?si=HGXMWEu2HfTxctbw",
         },
 
         "Hydro Heroes": {
@@ -98,7 +98,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "../club-3-images/Club3VC.jpg",
           instagramLink:
             "https://www.instagram.com/hydro__heroes?igsh=MWpuamV2cGtlNXV0ZQ==",
-          flashMobVideo: "https://www.youtube.com/embed/RxQWujoYbFQ?si=fUGrWaWP_8HDFcKr",
+          flashMobVideo: "https://www.youtube.com/embed/5HDds1_t_uw?si=X5n59WsNKeNpM5a2",
         },
         FireStorm: {
           element: `<img src="../images/clubs_logos/club4_logo.png" alt="Firestorm" class="club-logo">`,
@@ -131,7 +131,7 @@ async function fetchClubsData() {
           viceCaptainGirlImage: "👩‍💼",
           instagramLink:
             "https://www.instagram.com/aeroknights__vihang26?igsh=N2Vqam1rcDBobzdk",
-          flashMobVideo: "https://www.youtube.com/embed/n1g1xDYjYGg?si=r93NObHB6SOi6vAN",
+          flashMobVideo: "https://www.youtube.com/embed/nvP27LaDPpA?si=UC30DUkbhXECjKKh",
         },
       };
 
