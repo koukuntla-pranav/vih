@@ -39,7 +39,7 @@ function showWinnerBanner(winner, runnerUp) {
     banner.innerHTML = `
         <div style="font-size: 1.6rem; margin-bottom: 6px;">🏆 ${winner.name} — WINNER! 🏆</div>
         ${runnerUp ? `<div style="font-size: 1.1rem; opacity: 0.85;">🥈 ${runnerUp.name} — Runner-up</div>` : ''}
-        <div style="font-size: 0.8rem; margin-top: 8px; opacity: 0.6; cursor: pointer;" onclick="this.parentElement.style.transform='translateY(-100%)'">Tap to dismiss</div>
+        <div style="font-size: 0.8rem; margin-top: 8px; opacity: 0.6; cursor: pointer;" onclick="this.parentElement.style.transform='translateY(-150%)'; this.parentElement.style.opacity='0'; setTimeout(() => this.parentElement.remove(), 600);">Tap to dismiss</div>
     `;
     document.body.appendChild(banner);
 
@@ -47,7 +47,11 @@ function showWinnerBanner(winner, runnerUp) {
     setTimeout(() => { banner.style.transform = 'translateY(0)'; }, 300);
 
     // Auto dismiss after 8 seconds
-    setTimeout(() => { banner.style.transform = 'translateY(-100%)'; }, 8000);
+    setTimeout(() => { 
+        banner.style.transform = 'translateY(-150%)'; 
+        banner.style.opacity = '0';
+        setTimeout(() => { if (banner.parentElement) banner.remove(); }, 600);
+    }, 8000);
 }
 
 function renderClubs(clubLogosData = []) {
