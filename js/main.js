@@ -53,32 +53,10 @@ function renderLeaderboard() {
     table.innerHTML = headerHTML;
     leaderboard.appendChild(table);
 
-    // Trigger confetti if results are finalized
-    const hasWinner = clubs.some(c => c.rank === 'winner');
-    if (hasWinner) {
-        triggerWinnerConfetti();
-    }
+
 }
 
-function triggerWinnerConfetti() {
-    if (typeof confetti === 'undefined') return;
-    const duration = 4000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 35, spread: 360, ticks: 80, zIndex: 100 };
 
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    const intervalId = setInterval(function() {
-        const timeLeft = animationEnd - Date.now();
-        if (timeLeft <= 0) return clearInterval(intervalId);
-
-        const particleCount = 100 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 } }));
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 } }));
-    }, 200);
-}
 
 function renderAboutSection() {
     const facultyList = document.getElementById('facultyList');
@@ -268,28 +246,7 @@ function startCountdown() {
             updateFlipValue('minutes', '00');
             updateFlipValue('seconds', '00');
             
-            // Trigger confetti
-            if (typeof confetti !== 'undefined') {
-                const duration = 3000;
-                const animationEnd = Date.now() + duration;
-                const defaults = { startVelocity: 45, spread: 360, ticks: 100, zIndex: 100 };
 
-                function randomInRange(min, max) {
-                    return Math.random() * (max - min) + min;
-                }
-
-                const intervalId = setInterval(function() {
-                    const timeLeft = animationEnd - Date.now();
-
-                    if (timeLeft <= 0) {
-                        return clearInterval(intervalId);
-                    }
-
-                    const particleCount = 150 * (timeLeft / duration);
-                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.4), y: Math.random() - 0.2 } }));
-                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.6, 0.9), y: Math.random() - 0.2 } }));
-                }, 150);
-            }
 
             setTimeout(() => {
                 document.getElementById("countdown").innerHTML = "<div class='its-time-banner'>IT'S TIME!</div>";
